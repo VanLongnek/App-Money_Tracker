@@ -1,0 +1,23 @@
+# React Native
+**/node_modules/
+**/.expo/
+**/dist/
+**/.env
+**/.env.*
+!**/.env.example
+
+# .NET
+**/bin/
+**/obj/
+**/*.user
+**/*.suo
+**/appsettings.Development.json
+
+# IDE
+.vs/
+.vscode/
+.idea/
+
+# Hệ điều hành
+.DS_Store
+Thumbs.db
