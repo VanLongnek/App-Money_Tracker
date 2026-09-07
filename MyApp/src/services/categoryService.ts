@@ -1,4 +1,4 @@
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where } from "@react-native-firebase/firestore";
 
 import { database } from "../config/firebase";
 import type { Category, IconName, TransactionType } from "../types/finance";

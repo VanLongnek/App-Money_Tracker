@@ -5,6 +5,7 @@ import styled from "styled-components/native";
 
 import { AuthProvider, useAuth } from "../context/AuthContext";
 import { FinanceProvider } from "../context/FinanceContext";
+import { hasPhoneMfa } from "../services/authService";
 import { colors } from "../theme/tokens";
 
 export default function RootLayout() {
@@ -20,6 +21,9 @@ export default function RootLayout() {
 
 function RootNavigator() {
   const { user, isLoading } = useAuth();
+  const emailVerified = Boolean(user?.emailVerified);
+  const phoneMfaEnabled = hasPhoneMfa(user);
+  const canUseApp = Boolean(user && emailVerified && phoneMfaEnabled);
 
   if (isLoading) {
     return (
@@ -36,7 +40,7 @@ function RootNavigator() {
         contentStyle: { backgroundColor: colors.background },
       }}
     >
-      <Stack.Protected guard={Boolean(user)}>
+      <Stack.Protected guard={canUseApp}>
         <Stack.Screen name="index" />
         <Stack.Screen name="(tabs)" />
         <Stack.Screen
@@ -52,7 +56,23 @@ function RootNavigator() {
       <Stack.Protected guard={!user}>
         <Stack.Screen name="auth/sign-in" options={{ animation: "fade" }} />
         <Stack.Screen name="auth/sign-up" options={{ animation: "slide_from_right" }} />
+        <Stack.Screen
+          name="auth/verify-phone-otp"
+          options={{ animation: "slide_from_right" }}
+        />
       </Stack.Protected>
+
+      <Stack.Protected guard={Boolean(user && !emailVerified)}>
+        <Stack.Screen name="auth/verify-email" options={{ animation: "fade" }} />
+      </Stack.Protected>
+
+      <Stack.Protected guard={Boolean(user && emailVerified && !phoneMfaEnabled)}>
+        <Stack.Screen
+          name="auth/setup-phone"
+          options={{ animation: "slide_from_right" }}
+        />
+      </Stack.Protected>
+
     </Stack>
   );
 }

@@ -72,7 +72,12 @@ export default function TransactionsScreen() {
         {filtered.map((transaction, index) => <View key={transaction.id}><TransactionRow transaction={transaction} />{index < filtered.length - 1 ? <View style={styles.divider} /> : null}</View>)}
         {!isLoading && !error && filtered.length === 0 ? <View style={styles.empty}><Ionicons name="receipt-outline" size={34} color={colors.textMuted} /><Text style={styles.emptyTitle}>Không tìm thấy giao dịch</Text><Text style={styles.emptyCopy}>Thử từ khóa hoặc bộ lọc khác.</Text></View> : null}
       </View>
-      <Pressable onPress={() => router.push("/transaction/new")} style={({ pressed }) => [styles.fab, pressed && styles.pressed]}><Ionicons name="add" size={28} color={colors.white} /></Pressable>
+      <Pressable
+        onPress={() => router.push("/transaction/new")}
+        style={({ pressed }) => [styles.addButton, pressed && styles.pressed]}
+      >
+        <Ionicons name="add" size={28} color={colors.white} />
+      </Pressable>
     </AppScreen>
   );
 }
@@ -101,6 +106,6 @@ const styles = StyleSheet.create({
   empty: { paddingVertical: 52, alignItems: "center" },
   emptyTitle: { color: colors.text, fontSize: 15, fontWeight: "700", marginTop: spacing.md },
   emptyCopy: { color: colors.textMuted, fontSize: 12, marginTop: spacing.xs },
-  fab: { position: "absolute", right: spacing.xl, bottom: spacing.xxxl, width: 56, height: 56, borderRadius: radius.pill, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center", elevation: 5 },
+  addButton: { alignSelf: "flex-end", width: 56, height: 56, marginTop: spacing.lg, borderRadius: radius.pill, backgroundColor: colors.primary, alignItems: "center", justifyContent: "center", elevation: 3 },
   pressed: { opacity: 0.75 },
 });

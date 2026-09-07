@@ -6,7 +6,7 @@ import {
   serverTimestamp,
   setDoc,
   where,
-} from "firebase/firestore";
+} from "@react-native-firebase/firestore";
 
 import { database } from "../config/firebase";
 import type { Budget, IconName } from "../types/finance";

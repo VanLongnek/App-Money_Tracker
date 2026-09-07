@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -9,6 +9,7 @@ import { getAuthErrorMessage, resetPassword, signIn } from "../../services/authS
 import { colors, radius, spacing } from "../../theme/tokens";
 
 export default function SignInScreen() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -22,7 +23,11 @@ export default function SignInScreen() {
 
     try {
       setIsSubmitting(true);
-      await signIn(email, password);
+      const result = await signIn(email, password);
+
+      if (result === "otp-required") {
+        router.replace("/auth/verify-phone-otp");
+      }
     } catch (error) {
       Alert.alert("Đăng nhập thất bại", getAuthErrorMessage(error));
     } finally {
