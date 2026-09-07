@@ -1,6 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import type { ComponentProps } from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import styled from "styled-components/native";
 
 import { colors, radius, spacing } from "../theme/tokens";
 
@@ -13,25 +13,53 @@ type AppHeaderProps = {
 
 export function AppHeader({ title, subtitle, actionIcon, onAction }: AppHeaderProps) {
   return (
-    <View style={styles.container}>
-      <View style={styles.copy}>
-        {subtitle ? <Text style={styles.subtitle}>{subtitle}</Text> : null}
-        <Text style={styles.title}>{title}</Text>
-      </View>
+    <Container>
+      <TitleArea>
+        {subtitle ? <Subtitle>{subtitle}</Subtitle> : null}
+        <Title>{title}</Title>
+      </TitleArea>
       {actionIcon ? (
-        <Pressable accessibilityRole="button" onPress={onAction} style={({ pressed }) => [styles.action, pressed && styles.pressed]}>
+        <ActionButton accessibilityRole="button" activeOpacity={0.65} onPress={onAction}>
           <Ionicons name={actionIcon} size={21} color={colors.text} />
-        </Pressable>
+        </ActionButton>
       ) : null}
-    </View>
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { minHeight: 72, flexDirection: "row", alignItems: "center", justifyContent: "space-between", paddingTop: spacing.sm, paddingBottom: spacing.md },
-  copy: { flex: 1 },
-  subtitle: { color: colors.textMuted, fontSize: 13, marginBottom: 2 },
-  title: { color: colors.text, fontSize: 26, lineHeight: 32, fontWeight: "800", letterSpacing: -0.5 },
-  action: { width: 42, height: 42, borderRadius: radius.pill, alignItems: "center", justifyContent: "center", backgroundColor: colors.surface, borderWidth: 1, borderColor: colors.border },
-  pressed: { opacity: 0.65 },
-});
+const Container = styled.View`
+  min-height: 72px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: ${spacing.sm}px;
+  padding-bottom: ${spacing.md}px;
+`;
+
+const TitleArea = styled.View`
+  flex: 1;
+`;
+
+const Subtitle = styled.Text`
+  margin-bottom: 2px;
+  color: ${colors.textMuted};
+  font-size: 13px;
+`;
+
+const Title = styled.Text`
+  color: ${colors.text};
+  font-size: 26px;
+  line-height: 32px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+`;
+
+const ActionButton = styled.TouchableOpacity`
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid ${colors.border};
+  border-radius: ${radius.pill}px;
+  background-color: ${colors.surface};
+`;

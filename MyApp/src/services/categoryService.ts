@@ -1,13 +1,28 @@
-import { collection, getDocs } from "firebase/firestore";
-import { database } from "../config/firebase";
+import { collection, getDocs, query, where } from "firebase/firestore";
 
-export async function getCategories() {
-  const result = await getDocs(
-    collection(database, "categories")
+import { database } from "../config/firebase";
+import type { Category, IconName, TransactionType } from "../types/finance";
+
+export async function getCategories(categoryType: TransactionType): Promise<Category[]> {
+  const categoriesQuery = query(
+    collection(database, "categories"),
+    where("categoryType", "==", categoryType),
   );
 
-  return result.docs.map((document) => ({
-    id: document.id,
-    ...document.data()
-  }));
+  const result = await getDocs(categoriesQuery);
+
+  return result.docs
+    .map((document) => {
+      const data = document.data();
+
+      return {
+        id: document.id,
+        categoryName: String(data.categoryName || "Danh mục"),
+        categoryType,
+        color: String(data.color || "#236B4A"),
+        icon: String(data.icon || "pricetag-outline") as IconName,
+        order: Number(data.order || 0),
+      };
+    })
+    .sort((firstCategory, secondCategory) => firstCategory.order - secondCategory.order);
 }

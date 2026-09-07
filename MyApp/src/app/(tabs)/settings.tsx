@@ -1,24 +1,36 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Pressable, StyleSheet, Switch, Text, View } from "react-native";
+import { Alert, Pressable, StyleSheet, Switch, Text, View } from "react-native";
 
 import { AppHeader } from "../../components/AppHeader";
 import { AppScreen } from "../../components/AppScreen";
+import { useAuth } from "../../context/AuthContext";
+import { getAuthErrorMessage, logOut } from "../../services/authService";
 import { colors, radius, spacing } from "../../theme/tokens";
 import type { IconName } from "../../types/finance";
 
 export default function SettingsScreen() {
-  const router = useRouter();
+  const { user } = useAuth();
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);
   const [biometricsEnabled, setBiometricsEnabled] = useState(false);
+  const displayName = user?.displayName || "Người dùng";
+  const email = user?.email || "";
+  const initials = getInitials(displayName);
+
+  async function handleLogOut() {
+    try {
+      await logOut();
+    } catch (error) {
+      Alert.alert("Đăng xuất thất bại", getAuthErrorMessage(error));
+    }
+  }
 
   return (
     <AppScreen>
       <AppHeader title="Cài đặt" subtitle="Cá nhân hóa trải nghiệm" />
       <View style={styles.profileCard}>
-        <View style={styles.avatar}><Text style={styles.avatarText}>NA</Text></View>
-        <View style={styles.profileCopy}><Text style={styles.name}>Nguyễn An</Text><Text style={styles.email}>nguyenan@example.com</Text></View>
+        <View style={styles.avatar}><Text style={styles.avatarText}>{initials}</Text></View>
+        <View style={styles.profileCopy}><Text style={styles.name}>{displayName}</Text><Text style={styles.email}>{email}</Text></View>
         <Ionicons name="chevron-forward" size={20} color={colors.textMuted} />
       </View>
       <SettingSection title="Tài chính">
@@ -36,10 +48,19 @@ export default function SettingsScreen() {
         <SettingRow icon="download-outline" label="Xuất dữ liệu" />
         <SettingRow icon="help-circle-outline" label="Trợ giúp" />
       </SettingSection>
-      <Pressable onPress={() => router.push("/auth/sign-in")} style={({ pressed }) => [styles.logout, pressed && styles.pressed]}><Ionicons name="log-out-outline" size={20} color={colors.expense} /><Text style={styles.logoutText}>Đăng xuất</Text></Pressable>
+      <Pressable onPress={handleLogOut} style={({ pressed }) => [styles.logout, pressed && styles.pressed]}><Ionicons name="log-out-outline" size={20} color={colors.expense} /><Text style={styles.logoutText}>Đăng xuất</Text></Pressable>
       <Text style={styles.version}>Ví Nhà · Phiên bản 1.0.0</Text>
     </AppScreen>
   );
+}
+
+function getInitials(name: string) {
+  return name
+    .trim()
+    .split(/\s+/)
+    .slice(-2)
+    .map((word) => word[0]?.toUpperCase())
+    .join("");
 }
 
 function SettingSection({ title, children }: React.PropsWithChildren<{ title: string }>) {

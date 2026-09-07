@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { StyleSheet, Text, View } from "react-native";
+import styled from "styled-components/native";
 
 import { colors, radius, spacing } from "../theme/tokens";
 import type { Transaction } from "../types/finance";
@@ -9,28 +9,59 @@ export function TransactionRow({ transaction }: { transaction: Transaction }) {
   const isIncome = transaction.type === "income";
 
   return (
-    <View style={styles.container}>
-      <View style={[styles.icon, { backgroundColor: transaction.backgroundColor }]}>
+    <Container>
+      <IconBox $backgroundColor={transaction.backgroundColor}>
         <Ionicons name={transaction.icon} size={21} color={transaction.color} />
-      </View>
-      <View style={styles.details}>
-        <Text style={styles.title} numberOfLines={1}>{transaction.title}</Text>
-        <Text style={styles.meta} numberOfLines={1}>{transaction.category} · {transaction.dateLabel}</Text>
-      </View>
-      <Text style={[styles.amount, isIncome ? styles.income : styles.expense]}>
+      </IconBox>
+
+      <Details>
+        <Title numberOfLines={1}>{transaction.title}</Title>
+        <Description numberOfLines={1}>
+          {transaction.category} · {transaction.dateLabel}
+        </Description>
+      </Details>
+
+      <Amount $isIncome={isIncome}>
         {isIncome ? "+" : "−"}{formatCurrency(transaction.amount)}
-      </Text>
-    </View>
+      </Amount>
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flexDirection: "row", alignItems: "center", paddingVertical: spacing.md },
-  icon: { width: 44, height: 44, borderRadius: radius.md, alignItems: "center", justifyContent: "center" },
-  details: { flex: 1, marginHorizontal: spacing.md },
-  title: { color: colors.text, fontSize: 15, fontWeight: "700" },
-  meta: { color: colors.textMuted, fontSize: 11, marginTop: spacing.xs },
-  amount: { fontSize: 13, fontWeight: "800" },
-  income: { color: colors.income },
-  expense: { color: colors.text },
-});
+const Container = styled.View`
+  flex-direction: row;
+  align-items: center;
+  padding: ${spacing.md}px 0;
+`;
+
+const IconBox = styled.View<{ $backgroundColor: string }>`
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border-radius: ${radius.md}px;
+  background-color: ${({ $backgroundColor }) => $backgroundColor};
+`;
+
+const Details = styled.View`
+  flex: 1;
+  margin: 0 ${spacing.md}px;
+`;
+
+const Title = styled.Text`
+  color: ${colors.text};
+  font-size: 15px;
+  font-weight: 700;
+`;
+
+const Description = styled.Text`
+  margin-top: ${spacing.xs}px;
+  color: ${colors.textMuted};
+  font-size: 11px;
+`;
+
+const Amount = styled.Text<{ $isIncome: boolean }>`
+  color: ${({ $isIncome }) => ($isIncome ? colors.income : colors.text)};
+  font-size: 13px;
+  font-weight: 800;
+`;

@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import styled from "styled-components/native";
 
 import { colors, spacing } from "../theme/tokens";
 
@@ -6,15 +6,35 @@ type SectionHeaderProps = { title: string; actionLabel?: string; onAction?: () =
 
 export function SectionHeader({ title, actionLabel, onAction }: SectionHeaderProps) {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>{title}</Text>
-      {actionLabel ? <Pressable onPress={onAction}><Text style={styles.action}>{actionLabel}</Text></Pressable> : null}
-    </View>
+    <Container>
+      <Title>{title}</Title>
+      {actionLabel ? (
+        <ActionButton activeOpacity={0.65} onPress={onAction}>
+          <ActionText>{actionLabel}</ActionText>
+        </ActionButton>
+      ) : null}
+    </Container>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flexDirection: "row", alignItems: "center", justifyContent: "space-between", marginTop: spacing.xxl, marginBottom: spacing.md },
-  title: { color: colors.text, fontSize: 18, fontWeight: "700" },
-  action: { color: colors.primary, fontSize: 13, fontWeight: "700" },
-});
+const Container = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: ${spacing.xxl}px;
+  margin-bottom: ${spacing.md}px;
+`;
+
+const Title = styled.Text`
+  color: ${colors.text};
+  font-size: 18px;
+  font-weight: 700;
+`;
+
+const ActionButton = styled.TouchableOpacity``;
+
+const ActionText = styled.Text`
+  color: ${colors.primary};
+  font-size: 13px;
+  font-weight: 700;
+`;
