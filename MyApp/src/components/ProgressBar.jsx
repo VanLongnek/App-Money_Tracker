@@ -2,17 +2,11 @@ import styled from "styled-components/native";
 
 import { colors, radius } from "../theme/tokens";
 
-type ProgressBarProps = {
-  value: number;
-  color?: string;
-  height?: number;
-};
-
 export function ProgressBar({
   value,
-  color = colors.primary,
+  color = String(colors.primary),
   height = 8,
-}: ProgressBarProps) {
+}) {
   const percentage = Math.min(Math.max(value, 0), 1) * 100;
 
   return (
@@ -22,7 +16,7 @@ export function ProgressBar({
   );
 }
 
-const Track = styled.View<{ $height: number }>`
+const Track = styled.View`
   width: 100%;
   height: ${({ $height }) => $height}px;
   overflow: hidden;
@@ -30,7 +24,7 @@ const Track = styled.View<{ $height: number }>`
   background-color: ${colors.surfaceMuted};
 `;
 
-const Fill = styled.View<{ $color: string; $percentage: number }>`
+const Fill = styled.View`
   width: ${({ $percentage }) => $percentage}%;
   height: 100%;
   border-radius: ${radius.pill}px;

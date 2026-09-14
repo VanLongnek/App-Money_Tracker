@@ -2,10 +2,9 @@ import { Ionicons } from "@expo/vector-icons";
 import styled from "styled-components/native";
 
 import { colors, radius, spacing } from "../theme/tokens";
-import type { Transaction } from "../types/finance";
 import { formatCurrency } from "../utils/currency";
 
-export function TransactionRow({ transaction }: { transaction: Transaction }) {
+export function TransactionRow({ transaction }) {
   const isIncome = transaction.type === "income";
 
   return (
@@ -34,7 +33,7 @@ const Container = styled.View`
   padding: ${spacing.md}px 0;
 `;
 
-const IconBox = styled.View<{ $backgroundColor: string }>`
+const IconBox = styled.View`
   width: 44px;
   height: 44px;
   align-items: center;
@@ -60,7 +59,7 @@ const Description = styled.Text`
   font-size: 11px;
 `;
 
-const Amount = styled.Text<{ $isIncome: boolean }>`
+const Amount = styled.Text`
   color: ${({ $isIncome }) => ($isIncome ? colors.income : colors.text)};
   font-size: 13px;
   font-weight: 800;

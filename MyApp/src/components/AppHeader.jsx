@@ -1,28 +1,24 @@
 import { Ionicons } from "@expo/vector-icons";
-import type { ComponentProps } from "react";
 import styled from "styled-components/native";
 
 import { colors, radius, spacing } from "../theme/tokens";
 
-type AppHeaderProps = {
-  title: string;
-  subtitle?: string;
-  actionIcon?: ComponentProps<typeof Ionicons>["name"];
-  onAction?: () => void;
-};
-
-export function AppHeader({ title, subtitle, actionIcon, onAction }: AppHeaderProps) {
+export function AppHeader({ title, subtitle, actionIcon, onAction }) {
   return (
     <Container>
       <TitleArea>
-        {subtitle ? <Subtitle>{subtitle}</Subtitle> : null}
+        {subtitle && <Subtitle>{subtitle}</Subtitle>}
         <Title>{title}</Title>
       </TitleArea>
-      {actionIcon ? (
-        <ActionButton accessibilityRole="button" activeOpacity={0.65} onPress={onAction}>
-          <Ionicons name={actionIcon} size={21} color={colors.text} />
+      {actionIcon && (
+        <ActionButton
+           accessibilityRole="button"
+           activeOpacity={0.65}
+           onPress={onAction}
+        >
+          <Ionicons name={actionIcon} size = {21} color={colors.text} />
         </ActionButton>
-      ) : null}
+      ) }
     </Container>
   );
 }

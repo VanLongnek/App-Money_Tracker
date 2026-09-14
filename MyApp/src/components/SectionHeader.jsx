@@ -2,17 +2,21 @@ import styled from "styled-components/native";
 
 import { colors, spacing } from "../theme/tokens";
 
-type SectionHeaderProps = { title: string; actionLabel?: string; onAction?: () => void };
+const doNothing = () => {};
 
-export function SectionHeader({ title, actionLabel, onAction }: SectionHeaderProps) {
+export function SectionHeader({
+  title,
+  actionLabel = String(),
+  onAction = doNothing,
+}) {
   return (
     <Container>
       <Title>{title}</Title>
-      {actionLabel ? (
+      {actionLabel && (
         <ActionButton activeOpacity={0.65} onPress={onAction}>
           <ActionText>{actionLabel}</ActionText>
         </ActionButton>
-      ) : null}
+      )}
     </Container>
   );
 }

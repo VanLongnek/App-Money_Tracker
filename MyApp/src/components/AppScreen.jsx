@@ -1,14 +1,9 @@
-import type { ReactNode } from "react";
 import styled from "styled-components/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import { colors, spacing } from "../theme/tokens";
 
-type AppScreenProps = {
-  children: ReactNode;
-};
-
-export function AppScreen({ children }: AppScreenProps) {
+export function AppScreen({ children }) {
   return (
     <Screen edges={["top"]}>
       <ScrollArea showsVerticalScrollIndicator={false}>
