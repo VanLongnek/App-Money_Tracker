@@ -1,7 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
-
 import { AppHeader } from "../../components/AppHeader";
 import { AppScreen } from "../../components/AppScreen";
 import { ProgressBar } from "../../components/ProgressBar";
@@ -16,19 +15,12 @@ import { formatCurrentDate, getRemainingDaysInMonth } from "../../utils/date";
 export default function DashboardScreen() {
   const router = useRouter();
   const { user } = useAuth();
-  const {
-    transactions,
-    budgets,
-    isLoading,
-    isLoadingBudgets,
-    error,
-    budgetError,
-  } = useFinance();
+  const { transactions, budgets, isLoading, isLoadingBudgets, error, budgetError } = useFinance();
   const userName = getUserName(user?.displayName, user?.email);
   const currentDate = new Date();
-  const currentMonthTransactions = transactions.filter((transaction) =>
-    transaction.transactionDate.getMonth() === currentDate.getMonth()
-    && transaction.transactionDate.getFullYear() === currentDate.getFullYear()
+  const currentMonthTransactions = transactions.filter(transaction =>
+    transaction.transactionDate.getMonth() === currentDate.getMonth() &&
+    transaction.transactionDate.getFullYear() === currentDate.getFullYear()
   );
   const balance = calculateTotal(transactions, "income") - calculateTotal(transactions, "expense");
   const monthlyIncome = calculateTotal(currentMonthTransactions, "income");
@@ -44,14 +36,16 @@ export default function DashboardScreen() {
   return (
     <AppScreen>
       <AppHeader title={`${getGreeting()}, ${userName}`} subtitle={formatCurrentDate(currentDate)} actionIcon="notifications-outline" />
-
       <View style={styles.balanceCard}>
         <View style={styles.balanceHeader}>
           <View>
             <Text style={styles.balanceLabel}>Số dư hiện tại</Text>
             <Text style={styles.balanceAmount}>{formatCurrency(balance)}</Text>
           </View>
-          <View style={styles.monthPill}><Text style={styles.monthText}>{monthLabel}</Text><Ionicons name="chevron-down" size={14} color={colors.white} /></View>
+          <View style={styles.monthPill}>
+            <Text style={styles.monthText}>{monthLabel}</Text>
+            <Ionicons name="chevron-down" size={14} color={colors.white} />
+          </View>
         </View>
         <View style={styles.divider} />
         <View style={styles.cashFlow}>
@@ -60,14 +54,12 @@ export default function DashboardScreen() {
           <CashFlowItem icon="arrow-up" label="Chi tiêu" amount={monthlyExpense} />
         </View>
       </View>
-
       <View style={styles.actions}>
         <QuickAction icon="remove" label="Thêm chi" onPress={() => router.push("/transaction/new?type=expense")} />
         <QuickAction icon="add" label="Thêm thu" onPress={() => router.push("/transaction/new?type=income")} />
         <QuickAction icon="scan-outline" label="Quét hóa đơn" />
         <QuickAction icon="ellipsis-horizontal" label="Thêm" />
       </View>
-
       <SectionHeader title="Ngân sách tháng" actionLabel="Xem chi tiết" onAction={() => router.push("/(tabs)/budgets")} />
       <View style={styles.budgetCard}>
         {isLoadingBudgets ? <Text style={styles.listStatus}>Đang tải ngân sách...</Text> : null}
@@ -81,7 +73,10 @@ export default function DashboardScreen() {
         {budgets.length > 0 ? (
           <>
             <View style={styles.budgetTop}>
-              <View><Text style={styles.budgetValue}>{formatCurrency(budgetSpent)}</Text><Text style={styles.muted}>đã dùng trong {formatCurrency(totalBudget)}</Text></View>
+              <View>
+                <Text style={styles.budgetValue}>{formatCurrency(budgetSpent)}</Text>
+                <Text style={styles.muted}>đã dùng trong {formatCurrency(totalBudget)}</Text>
+              </View>
               <Text style={[styles.budgetPercent, budgetProgress >= 0.9 && styles.budgetDanger]}>{budgetPercentage}%</Text>
             </View>
             <ProgressBar value={budgetProgress} color={budgetProgress >= 0.9 ? colors.expense : colors.primary} />
@@ -89,7 +84,6 @@ export default function DashboardScreen() {
           </>
         ) : null}
       </View>
-
       <SectionHeader title="Giao dịch gần đây" actionLabel="Xem tất cả" onAction={() => router.push("/(tabs)/transactions")} />
       <View style={styles.listCard}>
         {isLoading ? <Text style={styles.listStatus}>Đang tải giao dịch...</Text> : null}
@@ -108,35 +102,50 @@ export default function DashboardScreen() {
   );
 }
 
-function calculateTotal(transactions: { amount: number; type: "income" | "expense" }[], type: "income" | "expense") {
+function calculateTotal(transactions, type) {
   return transactions
-    .filter((transaction) => transaction.type === type)
+    .filter(transaction => transaction.type === type)
     .reduce((total, transaction) => total + transaction.amount, 0);
 }
 
 function getGreeting() {
   const hour = new Date().getHours();
-
   if (hour < 12) return "Chào buổi sáng";
   if (hour < 18) return "Chào buổi chiều";
   return "Chào buổi tối";
 }
 
-function getUserName(displayName: string | null | undefined, email: string | null | undefined) {
+function getUserName(displayName, email) {
   if (displayName?.trim()) {
     const nameParts = displayName.trim().split(/\s+/);
     return nameParts[nameParts.length - 1];
   }
-
   return email?.split("@")[0] || "bạn";
 }
 
-function CashFlowItem({ icon, label, amount }: { icon: "arrow-down" | "arrow-up"; label: string; amount: number }) {
-  return <View style={styles.cashFlowItem}><View style={styles.cashFlowIcon}><Ionicons name={icon} size={14} color={colors.white} /></View><View><Text style={styles.cashFlowLabel}>{label}</Text><Text style={styles.cashFlowAmount}>{formatCurrency(amount)}</Text></View></View>;
+function CashFlowItem({ icon, label, amount }) {
+  return (
+    <View style={styles.cashFlowItem}>
+      <View style={styles.cashFlowIcon}>
+        <Ionicons name={icon} size={14} color={colors.white} />
+      </View>
+      <View>
+        <Text style={styles.cashFlowLabel}>{label}</Text>
+        <Text style={styles.cashFlowAmount}>{formatCurrency(amount)}</Text>
+      </View>
+    </View>
+  );
 }
 
-function QuickAction({ icon, label, onPress }: { icon: React.ComponentProps<typeof Ionicons>["name"]; label: string; onPress?: () => void }) {
-  return <Pressable onPress={onPress} style={({ pressed }) => [styles.quickAction, pressed && styles.pressed]}><View style={styles.quickIcon}><Ionicons name={icon} size={21} color={colors.primary} /></View><Text style={styles.quickLabel}>{label}</Text></Pressable>;
+function QuickAction({ icon, label, onPress }) {
+  return (
+    <Pressable onPress={onPress} style={({ pressed }) => [styles.quickAction, pressed && styles.pressed]}>
+      <View style={styles.quickIcon}>
+        <Ionicons name={icon} size={21} color={colors.primary} />
+      </View>
+      <Text style={styles.quickLabel}>{label}</Text>
+    </Pressable>
+  );
 }
 
 const styles = StyleSheet.create({

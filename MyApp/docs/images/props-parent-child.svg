@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="900" viewBox="0 0 1600 900" role="img" aria-labelledby="title description">
+  <title id="title">Truyền dữ liệu từ component cha xuống component con qua Props</title>
+  <desc id="description">DashboardScreen truyền title, subtitle, actionIcon và onAction xuống AppHeader thông qua props theo một chiều.</desc>
+
+  <defs>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#163428" flood-opacity="0.12"/>
+    </filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#267653"/>
+    </marker>
+    <style>
+      .font { font-family: Arial, "Segoe UI", sans-serif; }
+      .heading { font-size: 40px; font-weight: 700; fill: #17211c; }
+      .subheading { font-size: 22px; fill: #5e6a63; }
+      .card-title { font-size: 28px; font-weight: 700; fill: #ffffff; }
+      .card-caption { font-size: 20px; fill: #dcebe3; }
+      .code { font-family: Consolas, "Courier New", monospace; font-size: 20px; fill: #24312a; }
+      .prop-name { font-family: Consolas, "Courier New", monospace; font-size: 21px; font-weight: 700; fill: #1f6f4a; }
+      .prop-value { font-size: 20px; fill: #39453e; }
+      .arrow-title { font-size: 28px; font-weight: 700; fill: #1f6f4a; }
+      .arrow-note { font-size: 19px; fill: #657169; }
+      .footer { font-size: 21px; font-weight: 600; fill: #315b47; }
+    </style>
+  </defs>
+
+  <rect width="1600" height="900" fill="#f6f8f6"/>
+  <rect x="0" y="0" width="1600" height="14" fill="#267653"/>
+
+  <g class="font">
+    <text x="800" y="82" text-anchor="middle" class="heading">TRUYỀN DỮ LIỆU QUA PROPS</text>
+    <text x="800" y="122" text-anchor="middle" class="subheading">Dữ liệu đi một chiều từ component cha xuống component con</text>
+
+    <!-- Component cha -->
+    <g filter="url(#shadow)">
+      <rect x="90" y="190" width="540" height="520" rx="28" fill="#ffffff" stroke="#d7ded9" stroke-width="2"/>
+      <path d="M118 190 H602 Q630 190 630 218 V306 H90 V218 Q90 190 118 190 Z" fill="#174f39"/>
+    </g>
+    <text x="360" y="242" text-anchor="middle" class="card-title">DashboardScreen</text>
+    <text x="360" y="279" text-anchor="middle" class="card-caption">Component cha</text>
+
+    <text x="132" y="360" class="code">&lt;AppHeader</text>
+    <text x="166" y="406" class="code">title="Chào buổi tối, Long"</text>
+    <text x="166" y="452" class="code">subtitle="Thứ Hai, 14 tháng 9"</text>
+    <text x="166" y="498" class="code">actionIcon="notifications-outline"</text>
+    <text x="166" y="544" class="code">onAction={handleNotification}</text>
+    <text x="132" y="590" class="code">/&gt;</text>
+
+    <rect x="132" y="626" width="456" height="52" rx="14" fill="#e6f2eb"/>
+    <text x="360" y="660" text-anchor="middle" class="footer">Cha tạo dữ liệu và truyền xuống</text>
+
+    <!-- Mũi tên Props -->
+    <line x1="670" y1="430" x2="915" y2="430" stroke="#267653" stroke-width="8" stroke-linecap="round" marker-end="url(#arrow)"/>
+    <text x="792" y="382" text-anchor="middle" class="arrow-title">PROPS</text>
+    <text x="792" y="478" text-anchor="middle" class="arrow-note">Luồng dữ liệu một chiều</text>
+
+    <!-- Component con -->
+    <g filter="url(#shadow)">
+      <rect x="970" y="190" width="540" height="520" rx="28" fill="#ffffff" stroke="#d7ded9" stroke-width="2"/>
+      <path d="M998 190 H1482 Q1510 190 1510 218 V306 H970 V218 Q970 190 998 190 Z" fill="#267653"/>
+    </g>
+    <text x="1240" y="242" text-anchor="middle" class="card-title">AppHeader</text>
+    <text x="1240" y="279" text-anchor="middle" class="card-caption">Component con</text>
+
+    <rect x="1012" y="340" width="456" height="62" rx="14" fill="#f0f6f2"/>
+    <text x="1040" y="379" class="prop-name">title</text>
+    <text x="1190" y="379" class="prop-value">→ Tiêu đề chính</text>
+
+    <rect x="1012" y="418" width="456" height="62" rx="14" fill="#f0f6f2"/>
+    <text x="1040" y="457" class="prop-name">subtitle</text>
+    <text x="1190" y="457" class="prop-value">→ Dòng mô tả nhỏ</text>
+
+    <rect x="1012" y="496" width="456" height="62" rx="14" fill="#f0f6f2"/>
+    <text x="1040" y="535" class="prop-name">actionIcon</text>
+    <text x="1190" y="535" class="prop-value">→ Icon bên phải</text>
+
+    <rect x="1012" y="574" width="456" height="62" rx="14" fill="#f0f6f2"/>
+    <text x="1040" y="613" class="prop-name">onAction</text>
+    <text x="1190" y="613" class="prop-value">→ Hàm xử lý nhấn</text>
+
+    <rect x="1012" y="650" width="456" height="36" rx="12" fill="#e6f2eb"/>
+    <text x="1240" y="676" text-anchor="middle" class="footer">Con tiếp nhận và hiển thị dữ liệu</text>
+
+    <!-- Ghi chú -->
+    <rect x="235" y="770" width="1130" height="76" rx="20" fill="#ffffff" stroke="#cbd8d0" stroke-width="2"/>
+    <circle cx="286" cy="808" r="18" fill="#267653"/>
+    <text x="286" y="815" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="700" fill="#ffffff">i</text>
+    <text x="330" y="816" class="footer">Component con chỉ sử dụng props nhận được và không thay đổi trực tiếp dữ liệu của component cha.</text>
+  </g>
+</svg>
