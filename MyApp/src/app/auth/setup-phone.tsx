@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -25,12 +25,18 @@ export default function SetupPhoneScreen() {
     const normalizedPhoneNumber = normalizeVietnamesePhoneNumber(phoneNumber);
 
     if (!normalizedPhoneNumber) {
-      Alert.alert("Số điện thoại chưa đúng", "Ví dụ hợp lệ: 0901234567 hoặc +84901234567.");
+      Alert.alert(
+        "Số điện thoại chưa đúng",
+        "Ví dụ hợp lệ: 0901234567 hoặc +84901234567.",
+      );
       return;
     }
 
     if (!password) {
-      Alert.alert("Chưa nhập mật khẩu", "Hãy nhập lại mật khẩu để bảo vệ tài khoản.");
+      Alert.alert(
+        "Chưa nhập mật khẩu",
+        "Hãy nhập lại mật khẩu để bảo vệ tài khoản.",
+      );
       return;
     }
 
@@ -38,7 +44,10 @@ export default function SetupPhoneScreen() {
       setIsSubmitting(true);
       await sendEnrollmentOtp(normalizedPhoneNumber, password);
       setOtpSent(true);
-      Alert.alert("Đã gửi OTP", "Hãy nhập mã gồm 6 chữ số được gửi đến điện thoại.");
+      Alert.alert(
+        "Đã gửi OTP",
+        "Hãy nhập mã gồm 6 chữ số được gửi đến điện thoại.",
+      );
     } catch (error) {
       Alert.alert("Không thể gửi OTP", getAuthErrorMessage(error));
     } finally {
@@ -67,7 +76,11 @@ export default function SetupPhoneScreen() {
     <Screen>
       <Container behavior={Platform.OS === "ios" ? "padding" : undefined}>
         <IconCircle>
-          <Ionicons name="phone-portrait-outline" size={34} color={colors.primary} />
+          <Ionicons
+            name="phone-portrait-outline"
+            size={34}
+            color={colors.primary}
+          />
         </IconCircle>
 
         <StepText>BƯỚC 3/3</StepText>
@@ -94,7 +107,11 @@ export default function SetupPhoneScreen() {
           <>
             <Label>Xác nhận mật khẩu</Label>
             <InputBox>
-              <Ionicons name="lock-closed-outline" size={20} color={colors.textMuted} />
+              <Ionicons
+                name="lock-closed-outline"
+                size={20}
+                color={colors.textMuted}
+              />
               <Input
                 value={password}
                 onChangeText={setPassword}
@@ -112,10 +129,16 @@ export default function SetupPhoneScreen() {
           <>
             <Label>Mã OTP</Label>
             <InputBox>
-              <Ionicons name="keypad-outline" size={20} color={colors.textMuted} />
+              <Ionicons
+                name="keypad-outline"
+                size={20}
+                color={colors.textMuted}
+              />
               <Input
                 value={otp}
-                onChangeText={(value) => setOtp(value.replace(/\D/g, "").slice(0, 6))}
+                onChangeText={(value) =>
+                  setOtp(value.replace(/\D/g, "").slice(0, 6))
+                }
                 placeholder="000000"
                 placeholderTextColor={colors.textMuted}
                 keyboardType="number-pad"
@@ -126,8 +149,8 @@ export default function SetupPhoneScreen() {
         ) : null}
 
         <PrivacyText>
-          Khi tiếp tục, số điện thoại sẽ được gửi cho Firebase/Google để xác minh và
-          chống lạm dụng.
+          Khi tiếp tục, số điện thoại sẽ được gửi cho Firebase/Google để xác
+          minh và chống lạm dụng.
         </PrivacyText>
 
         <PrimaryButton
@@ -165,7 +188,9 @@ function normalizeVietnamesePhoneNumber(value: string) {
     ? `+84${compactValue.slice(1)}`
     : compactValue;
 
-  return /^\+84\d{9,10}$/.test(internationalValue) ? internationalValue : undefined;
+  return /^\+84\d{9,10}$/.test(internationalValue)
+    ? internationalValue
+    : undefined;
 }
 
 const Screen = styled(SafeAreaView)`

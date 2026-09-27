@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { Tabs } from "expo-router";
 
 import { colors } from "../../theme/tokens";
@@ -9,7 +9,7 @@ const icons = {
   budgets: ["pie-chart", "pie-chart-outline"],
   reports: ["bar-chart", "bar-chart-outline"],
   settings: ["settings", "settings-outline"],
-} as const;
+};
 
 export default function TabLayout() {
   return (
@@ -22,7 +22,7 @@ export default function TabLayout() {
         tabBarStyle: { height: 68, paddingTop: 8, paddingBottom: 8, backgroundColor: colors.surface, borderTopColor: colors.border },
         tabBarHideOnKeyboard: true,
         tabBarIcon: ({ color, focused, size }) => {
-          const names = icons[route.name as keyof typeof icons] ?? icons.dashboard;
+          const names = icons[route.name] ?? icons.dashboard;
           return <Ionicons name={names[focused ? 0 : 1]} color={color} size={size} />;
         },
       })}

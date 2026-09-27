@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useRouter } from "expo-router";
 import styled from "styled-components/native";
 
@@ -7,7 +7,6 @@ import { AppScreen } from "../../components/AppScreen";
 import { ProgressBar } from "../../components/ProgressBar";
 import { useFinance } from "../../context/FinanceContext";
 import { colors, radius, spacing } from "../../theme/tokens";
-import type { Budget } from "../../types/finance";
 import { formatCurrency } from "../../utils/currency";
 import { formatMonthYear } from "../../utils/date";
 
@@ -46,7 +45,8 @@ export default function BudgetsScreen() {
         <Notice>
           <Ionicons name="warning-outline" size={19} color={colors.expense} />
           <NoticeText>
-            Bạn đã vượt ngân sách {formatCurrency(totalSpent - totalLimit)} trong tháng này.
+            Bạn đã vượt ngân sách {formatCurrency(totalSpent - totalLimit)}{" "}
+            trong tháng này.
           </NoticeText>
         </Notice>
       ) : null}
@@ -57,9 +57,15 @@ export default function BudgetsScreen() {
       {budgetError ? <ErrorText>{budgetError}</ErrorText> : null}
       {!isLoadingBudgets && !budgetError && budgets.length === 0 ? (
         <EmptyCard>
-          <Ionicons name="pie-chart-outline" size={30} color={colors.textMuted} />
+          <Ionicons
+            name="pie-chart-outline"
+            size={30}
+            color={colors.textMuted}
+          />
           <EmptyTitle>Chưa có ngân sách tháng này</EmptyTitle>
-          <EmptyText>Hãy tạo hạn mức cho một danh mục chi để bắt đầu theo dõi.</EmptyText>
+          <EmptyText>
+            Hãy tạo hạn mức cho một danh mục chi để bắt đầu theo dõi.
+          </EmptyText>
         </EmptyCard>
       ) : null}
 
@@ -83,7 +89,7 @@ export default function BudgetsScreen() {
   );
 }
 
-function BudgetItem({ budget, hasDivider }: { budget: Budget; hasDivider: boolean }) {
+function BudgetItem({ budget, hasDivider }) {
   const progress = budget.limit > 0 ? budget.spent / budget.limit : 0;
   const isNearLimit = progress >= 0.9;
 
@@ -96,17 +102,24 @@ function BudgetItem({ budget, hasDivider }: { budget: Budget; hasDivider: boolea
         <ItemCopy>
           <NameRow>
             <ItemName>{budget.name}</ItemName>
-            <Percentage $danger={isNearLimit}>{Math.round(progress * 100)}%</Percentage>
+            <Percentage $danger={isNearLimit}>
+              {Math.round(progress * 100)}%
+            </Percentage>
           </NameRow>
-          <ItemMeta>{formatCurrency(budget.spent)} / {formatCurrency(budget.limit)}</ItemMeta>
+          <ItemMeta>
+            {formatCurrency(budget.spent)} / {formatCurrency(budget.limit)}
+          </ItemMeta>
         </ItemCopy>
       </ItemTop>
-      <ProgressBar value={progress} color={isNearLimit ? colors.expense : budget.color} />
+      <ProgressBar
+        value={progress}
+        color={isNearLimit ? colors.expense : budget.color}
+      />
     </Item>
   );
 }
 
-function sumBy(budgets: Budget[], field: "limit" | "spent") {
+function sumBy(budgets, field) {
   return budgets.reduce((total, budget) => total + budget[field], 0);
 }
 
@@ -215,9 +228,9 @@ const BudgetList = styled.View`
   background-color: ${colors.surface};
 `;
 
-const Item = styled.View<{ $hasDivider: boolean }>`
+const Item = styled.View`
   padding: ${spacing.lg}px 0;
-  border-bottom-width: ${({ $hasDivider }) => $hasDivider ? 1 : 0}px;
+  border-bottom-width: ${({ $hasDivider }) => ($hasDivider ? 1 : 0)}px;
   border-bottom-color: ${colors.border};
 `;
 
@@ -227,7 +240,7 @@ const ItemTop = styled.View`
   align-items: center;
 `;
 
-const IconBox = styled.View<{ $color: string }>`
+const IconBox = styled.View`
   width: 42px;
   height: 42px;
   align-items: center;
@@ -253,8 +266,8 @@ const ItemName = styled.Text`
   font-weight: 700;
 `;
 
-const Percentage = styled.Text<{ $danger: boolean }>`
-  color: ${({ $danger }) => $danger ? colors.expense : colors.primary};
+const Percentage = styled.Text`
+  color: ${({ $danger }) => ($danger ? colors.expense : colors.primary)};
   font-size: 12px;
   font-weight: 800;
 `;

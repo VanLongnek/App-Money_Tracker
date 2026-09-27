@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform } from "react-native";
@@ -6,8 +6,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
 import {
-  confirmSignInOtp,
-  getAuthErrorMessage,
+    confirmSignInOtp,
+    getAuthErrorMessage,
 } from "../../services/authService";
 import { colors, radius, spacing } from "../../theme/tokens";
 
@@ -40,7 +40,11 @@ export default function VerifyPhoneOtpScreen() {
         </BackButton>
 
         <IconCircle>
-          <Ionicons name="shield-checkmark-outline" size={34} color={colors.primary} />
+          <Ionicons
+            name="shield-checkmark-outline"
+            size={34}
+            color={colors.primary}
+          />
         </IconCircle>
         <Title>Nhập mã OTP</Title>
         <Description>

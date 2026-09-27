@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Alert } from "react-native";
@@ -73,11 +73,16 @@ export default function NewBudgetScreen() {
         color: category.color,
       });
 
-      Alert.alert("Đã lưu ngân sách", "Hạn mức của danh mục đã được cập nhật.", [
-        { text: "Đồng ý", onPress: () => router.back() },
-      ]);
+      Alert.alert(
+        "Đã lưu ngân sách",
+        "Hạn mức của danh mục đã được cập nhật.",
+        [{ text: "Đồng ý", onPress: () => router.back() }],
+      );
     } catch {
-      Alert.alert("Không thể lưu", "Hãy kiểm tra mạng và Firestore Rules rồi thử lại.");
+      Alert.alert(
+        "Không thể lưu",
+        "Hãy kiểm tra mạng và Firestore Rules rồi thử lại.",
+      );
     } finally {
       setIsSaving(false);
     }
@@ -93,7 +98,10 @@ export default function NewBudgetScreen() {
         <HeaderSpace />
       </Header>
 
-      <Content keyboardShouldPersistTaps="handled" showsVerticalScrollIndicator={false}>
+      <Content
+        keyboardShouldPersistTaps="handled"
+        showsVerticalScrollIndicator={false}
+      >
         <MonthLabel>Áp dụng cho</MonthLabel>
         <MonthValue>{formatMonthYear()}</MonthValue>
 
@@ -117,7 +125,11 @@ export default function NewBudgetScreen() {
           </StatusBox>
         ) : error ? (
           <StatusBox>
-            <Ionicons name="cloud-offline-outline" size={24} color={colors.expense} />
+            <Ionicons
+              name="cloud-offline-outline"
+              size={24}
+              color={colors.expense}
+            />
             <ErrorText>{error}</ErrorText>
           </StatusBox>
         ) : (
@@ -133,14 +145,20 @@ export default function NewBudgetScreen() {
                   onPress={() => setSelectedCategoryId(category.id)}
                   activeOpacity={0.7}
                 >
-                  <CategoryIcon selected={selected} selectedColor={category.color}>
+                  <CategoryIcon
+                    selected={selected}
+                    selectedColor={category.color}
+                  >
                     <Ionicons
                       name={category.icon}
                       size={20}
                       color={selected ? colors.white : category.color}
                     />
                   </CategoryIcon>
-                  <CategoryName selected={selected} selectedColor={category.color}>
+                  <CategoryName
+                    selected={selected}
+                    selectedColor={category.color}
+                  >
                     {category.categoryName}
                   </CategoryName>
                 </CategoryButton>
@@ -151,7 +169,11 @@ export default function NewBudgetScreen() {
       </Content>
 
       <Footer>
-        <SaveButton disabled={isSaving} onPress={handleSave} activeOpacity={0.75}>
+        <SaveButton
+          disabled={isSaving}
+          onPress={handleSave}
+          activeOpacity={0.75}
+        >
           <SaveText>{isSaving ? "Đang lưu..." : "Lưu ngân sách"}</SaveText>
         </SaveButton>
       </Footer>
@@ -278,12 +300,16 @@ const CategoryGrid = styled.View`
   row-gap: ${spacing.lg}px;
 `;
 
-const CategoryButton = styled.TouchableOpacity<{ selected: boolean; selectedColor: string }>`
+const CategoryButton = styled.TouchableOpacity<{
+  selected: boolean;
+  selectedColor: string;
+}>`
   width: 31%;
   align-items: center;
   padding: ${spacing.sm}px 0;
   border-radius: ${radius.md}px;
-  background-color: ${({ selected, selectedColor }) => selected ? `${selectedColor}18` : "transparent"};
+  background-color: ${({ selected, selectedColor }) =>
+    selected ? `${selectedColor}18` : "transparent"};
 `;
 
 const CategoryIcon = styled.View<{ selected: boolean; selectedColor: string }>`
@@ -291,16 +317,20 @@ const CategoryIcon = styled.View<{ selected: boolean; selectedColor: string }>`
   height: 42px;
   align-items: center;
   justify-content: center;
-  border: 1px solid ${({ selected, selectedColor }) => selected ? selectedColor : colors.border};
+  border: 1px solid
+    ${({ selected, selectedColor }) =>
+      selected ? selectedColor : colors.border};
   border-radius: ${radius.md}px;
-  background-color: ${({ selected, selectedColor }) => selected ? selectedColor : colors.surface};
+  background-color: ${({ selected, selectedColor }) =>
+    selected ? selectedColor : colors.surface};
 `;
 
 const CategoryName = styled.Text<{ selected: boolean; selectedColor: string }>`
   margin-top: ${spacing.sm}px;
-  color: ${({ selected, selectedColor }) => selected ? selectedColor : colors.textMuted};
+  color: ${({ selected, selectedColor }) =>
+    selected ? selectedColor : colors.textMuted};
   font-size: 10px;
-  font-weight: ${({ selected }) => selected ? 800 : 600};
+  font-weight: ${({ selected }) => (selected ? 800 : 600)};
 `;
 
 const Footer = styled.View`

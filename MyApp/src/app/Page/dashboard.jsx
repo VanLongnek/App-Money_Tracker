@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useRouter } from "expo-router";
 import { Pressable, StyleSheet, Text, View } from "react-native";
 
@@ -135,47 +135,73 @@ export default function DashboardScreen() {
 // ----- Hàm xử lý dữ liệu -----
 
 function getTransactionsInMonth(transactions, date) {
-  const result = [];
-  for (const transaction of transactions) {
-    const sameMonth = transaction.transactionDate.getMonth() === date.getMonth();
-    const sameYear = transaction.transactionDate.getFullYear() === date.getFullYear();
-    if (sameMonth && sameYear) {
-      result.push(transaction);
-    }
-  }
-  return result;
+  return transactions.filter((transaction) => {
+    const transactionDate = transaction.transactionDate;
+
+    return (
+      transactionDate.getMonth() === date.getMonth()
+      && transactionDate.getFullYear() === date.getFullYear()
+    );
+  });
 }
 
 function calculateTotal(transactions, type) {
+  // Khởi tạo tổng tiền ban đầu bằng 0.
   let total = 0;
+
+  // Duyệt lần lượt qua từng giao dịch trong danh sách.
   for (const transaction of transactions) {
+    // Chỉ xử lý giao dịch có cùng loại với loại được truyền vào.
     if (transaction.type === type) {
+      // Cộng số tiền của giao dịch phù hợp vào tổng hiện tại.
       total += transaction.amount;
     }
   }
+
+  // Trả về tổng tiền của các giao dịch cùng loại.
   return total;
 }
 
 function sumBudgetField(budgets, field) {
+  // Khởi tạo tổng giá trị của trường ngân sách bằng 0.
   let total = 0;
+
+  // Duyệt qua từng ngân sách trong danh sách.
   for (const budget of budgets) {
+    // Lấy giá trị theo tên trường được truyền vào và cộng vào tổng.
     total += budget[field];
   }
+
+  // Trả về tổng của trường đã chọn, ví dụ tổng limit hoặc tổng spent.
   return total;
 }
 
 function getGreeting() {
+  // Lấy giờ hiện tại theo đồng hồ của thiết bị.
   const hour = new Date().getHours();
+
+  // Nếu giờ nhỏ hơn 12 thì hiển thị lời chào buổi sáng.
   if (hour < 12) return "Chào buổi sáng";
+
+  // Nếu giờ nhỏ hơn 18 thì hiển thị lời chào buổi chiều.
   if (hour < 18) return "Chào buổi chiều";
+
+  // Các khoảng thời gian còn lại được xem là buổi tối.
   return "Chào buổi tối";
 }
 
 function getUserName(displayName, email) {
+  // Kiểm tra displayName có tồn tại và không chỉ chứa khoảng trắng.
   if (displayName?.trim()) {
+    // Xóa khoảng trắng thừa ở hai đầu tên rồi tách tên thành từng phần.
     const nameParts = displayName.trim().split(/\s+/);
+
+    // Lấy phần tử cuối cùng, thường là tên riêng của người dùng.
     return nameParts[nameParts.length - 1];
   }
+
+  // Nếu không có displayName, lấy phần trước ký tự @ trong email.
+  // Nếu email cũng không tồn tại thì dùng tên mặc định là "bạn".
   return email?.split("@")[0] || "bạn";
 }
 

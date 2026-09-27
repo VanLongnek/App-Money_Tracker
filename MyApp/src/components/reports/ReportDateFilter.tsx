@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useEffect, useMemo, useState } from "react";
 import { Modal } from "react-native";
 import { Calendar, LocaleConfig, type DateData } from "react-native-calendars";
@@ -7,17 +7,51 @@ import styled from "styled-components/native";
 
 import { colors, radius, spacing } from "../../theme/tokens";
 import {
-  type DateRange,
-  formatDateRange,
-  fromDateKey,
-  getPresetDateRange,
-  toDateKey,
+    formatDateRange,
+    fromDateKey,
+    getPresetDateRange,
+    toDateKey,
+    type DateRange,
 } from "../../utils/report";
 
 LocaleConfig.locales.vi = {
-  monthNames: ["Tháng 1", "Tháng 2", "Tháng 3", "Tháng 4", "Tháng 5", "Tháng 6", "Tháng 7", "Tháng 8", "Tháng 9", "Tháng 10", "Tháng 11", "Tháng 12"],
-  monthNamesShort: ["T1", "T2", "T3", "T4", "T5", "T6", "T7", "T8", "T9", "T10", "T11", "T12"],
-  dayNames: ["Chủ nhật", "Thứ hai", "Thứ ba", "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"],
+  monthNames: [
+    "Tháng 1",
+    "Tháng 2",
+    "Tháng 3",
+    "Tháng 4",
+    "Tháng 5",
+    "Tháng 6",
+    "Tháng 7",
+    "Tháng 8",
+    "Tháng 9",
+    "Tháng 10",
+    "Tháng 11",
+    "Tháng 12",
+  ],
+  monthNamesShort: [
+    "T1",
+    "T2",
+    "T3",
+    "T4",
+    "T5",
+    "T6",
+    "T7",
+    "T8",
+    "T9",
+    "T10",
+    "T11",
+    "T12",
+  ],
+  dayNames: [
+    "Chủ nhật",
+    "Thứ hai",
+    "Thứ ba",
+    "Thứ tư",
+    "Thứ năm",
+    "Thứ sáu",
+    "Thứ bảy",
+  ],
   dayNamesShort: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
   today: "Hôm nay",
 };
@@ -48,7 +82,9 @@ export function ReportDateFilter({
   onApply,
 }: ReportDateFilterProps) {
   const [startDate, setStartDate] = useState(toDateKey(initialRange.start));
-  const [endDate, setEndDate] = useState<string | null>(toDateKey(initialRange.end));
+  const [endDate, setEndDate] = useState<string | null>(
+    toDateKey(initialRange.end),
+  );
 
   useEffect(() => {
     if (!visible) return;
@@ -88,7 +124,12 @@ export function ReportDateFilter({
   };
 
   return (
-    <Modal visible={visible} transparent animationType="slide" onRequestClose={onClose}>
+    <Modal
+      visible={visible}
+      transparent
+      animationType="slide"
+      onRequestClose={onClose}
+    >
       <Overlay>
         <Sheet edges={["bottom"]}>
           <Handle />
@@ -127,8 +168,15 @@ export function ReportDateFilter({
           />
 
           <Hint>
-            <Ionicons name="information-circle-outline" size={17} color={colors.textMuted} />
-            <HintText>Chọn ngày bắt đầu, sau đó chọn ngày kết thúc. Dấu chấm đỏ là ngày có khoản chi.</HintText>
+            <Ionicons
+              name="information-circle-outline"
+              size={17}
+              color={colors.textMuted}
+            />
+            <HintText>
+              Chọn ngày bắt đầu, sau đó chọn ngày kết thúc. Dấu chấm đỏ là ngày
+              có khoản chi.
+            </HintText>
           </Hint>
 
           <Actions>
@@ -145,7 +193,11 @@ export function ReportDateFilter({
   );
 }
 
-function createMarkedDates(startDate: string, endDate: string | null, expenseDateKeys: string[]) {
+function createMarkedDates(
+  startDate: string,
+  endDate: string | null,
+  expenseDateKeys: string[],
+) {
   const result: Record<string, MarkedDay> = {};
 
   expenseDateKeys.forEach((date) => {
@@ -168,7 +220,11 @@ function createMarkedDates(startDate: string, endDate: string | null, expenseDat
       color: isStart || isEnd ? colors.primary : colors.primarySoft,
       textColor: isStart || isEnd ? colors.white : colors.text,
       marked: hasExpense,
-      dotColor: hasExpense ? (isStart || isEnd ? colors.white : colors.expense) : undefined,
+      dotColor: hasExpense
+        ? isStart || isEnd
+          ? colors.white
+          : colors.expense
+        : undefined,
     };
 
     current.setDate(current.getDate() + 1);

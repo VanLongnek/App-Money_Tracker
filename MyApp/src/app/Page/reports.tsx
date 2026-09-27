@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useRouter } from "expo-router";
 import { useMemo, useState } from "react";
 import styled from "styled-components/native";
@@ -15,20 +15,19 @@ import {
   buildCategoryExpenses,
   buildExpenseChart,
   calculateTransactionTotal,
-  type CategoryExpense,
-  type DateRange,
   filterTransactionsByRange,
   formatDateRange,
   getPresetDateRange,
-  type ReportPreset,
   toDateKey,
 } from "../../utils/report";
 
 export default function ReportsScreen() {
   const router = useRouter();
   const { transactions, isLoading, error } = useFinance();
-  const [preset, setPreset] = useState<ReportPreset>("currentMonth");
-  const [dateRange, setDateRange] = useState(() => getPresetDateRange("currentMonth"));
+  const [preset, setPreset] = useState("currentMonth");
+  const [dateRange, setDateRange] = useState(() =>
+    getPresetDateRange("currentMonth"),
+  );
   const [calendarVisible, setCalendarVisible] = useState(false);
 
   const filteredTransactions = useMemo(
@@ -40,26 +39,29 @@ export default function ReportsScreen() {
   const chartItems = buildExpenseChart(filteredTransactions, dateRange);
   const categoryExpenses = buildCategoryExpenses(filteredTransactions);
   const expenseDateKeys = useMemo(
-    () => Array.from(new Set(
-      transactions
-        .filter((transaction) => transaction.type === "expense")
-        .map((transaction) => toDateKey(transaction.transactionDate)),
-    )),
+    () =>
+      Array.from(
+        new Set(
+          transactions
+            .filter((transaction) => transaction.type === "expense")
+            .map((transaction) => toDateKey(transaction.transactionDate)),
+        ),
+      ),
     [transactions],
   );
 
-  function selectPreset(selectedPreset: Exclude<ReportPreset, "custom">) {
+  function selectPreset(selectedPreset) {
     setPreset(selectedPreset);
     setDateRange(getPresetDateRange(selectedPreset));
   }
 
-  function applyCustomRange(range: DateRange) {
+  function applyCustomRange(range) {
     setPreset("custom");
     setDateRange(range);
     setCalendarVisible(false);
   }
 
-  function openCategoryTransactions(category: CategoryExpense) {
+  function openCategoryTransactions(category) {
     router.push({
       pathname: "/(tabs)/transactions",
       params: {
@@ -98,8 +100,15 @@ export default function ReportsScreen() {
         />
       </PeriodTabs>
 
-      <SelectedRange onPress={() => setCalendarVisible(true)} activeOpacity={0.65}>
-        <Ionicons name="calendar-clear-outline" size={17} color={colors.primary} />
+      <SelectedRange
+        onPress={() => setCalendarVisible(true)}
+        activeOpacity={0.65}
+      >
+        <Ionicons
+          name="calendar-clear-outline"
+          size={17}
+          color={colors.primary}
+        />
         <SelectedRangeText>{formatDateRange(dateRange)}</SelectedRangeText>
         {preset === "custom" ? <CustomBadge>Tùy chọn</CustomBadge> : null}
         <Ionicons name="chevron-forward" size={16} color={colors.textMuted} />
@@ -131,13 +140,7 @@ export default function ReportsScreen() {
   );
 }
 
-type PeriodButtonProps = {
-  label: string;
-  selected: boolean;
-  onPress: () => void;
-};
-
-function PeriodButton({ label, selected, onPress }: PeriodButtonProps) {
+function PeriodButton({ label, selected, onPress }) {
   return (
     <PeriodOption $selected={selected} onPress={onPress} activeOpacity={0.7}>
       <PeriodText $selected={selected}>{label}</PeriodText>
@@ -158,13 +161,14 @@ const PeriodOption = styled.TouchableOpacity<{ $selected: boolean }>`
   padding: ${spacing.sm}px 0;
   justify-content: center;
   border-radius: ${radius.sm}px;
-  background-color: ${({ $selected }) => $selected ? colors.surface : "transparent"};
+  background-color: ${({ $selected }) =>
+    $selected ? colors.surface : "transparent"};
 `;
 
 const PeriodText = styled.Text<{ $selected: boolean }>`
-  color: ${({ $selected }) => $selected ? colors.text : colors.textMuted};
+  color: ${({ $selected }) => ($selected ? colors.text : colors.textMuted)};
   font-size: 11px;
-  font-weight: ${({ $selected }) => $selected ? 800 : 600};
+  font-weight: ${({ $selected }) => ($selected ? 800 : 600)};
   text-align: center;
 `;
 

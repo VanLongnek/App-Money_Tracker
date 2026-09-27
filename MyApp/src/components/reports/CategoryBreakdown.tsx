@@ -1,10 +1,10 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import styled from "styled-components/native";
 
-import { ProgressBar } from "../ProgressBar";
 import { colors, radius, spacing } from "../../theme/tokens";
 import { formatCurrency } from "../../utils/currency";
 import type { CategoryExpense } from "../../utils/report";
+import { ProgressBar } from "../ProgressBar";
 
 type CategoryBreakdownProps = {
   categories: CategoryExpense[];
@@ -23,13 +23,18 @@ export function CategoryBreakdown({
       <Card>
         {categories.length === 0 ? (
           <EmptyState>
-            <Ionicons name="receipt-outline" size={28} color={colors.textMuted} />
+            <Ionicons
+              name="receipt-outline"
+              size={28}
+              color={colors.textMuted}
+            />
             <EmptyText>Không có khoản chi trong thời gian này.</EmptyText>
           </EmptyState>
         ) : null}
 
         {categories.map((category, index) => {
-          const percentage = totalExpense > 0 ? category.amount / totalExpense : 0;
+          const percentage =
+            totalExpense > 0 ? category.amount / totalExpense : 0;
 
           return (
             <CategoryButton
@@ -41,10 +46,20 @@ export function CategoryBreakdown({
               <CategoryHeading>
                 <Dot $color={category.color} />
                 <CategoryName>{category.name}</CategoryName>
-                <CategoryAmount>{formatCurrency(category.amount)}</CategoryAmount>
-                <Ionicons name="chevron-forward" size={15} color={colors.textMuted} />
+                <CategoryAmount>
+                  {formatCurrency(category.amount)}
+                </CategoryAmount>
+                <Ionicons
+                  name="chevron-forward"
+                  size={15}
+                  color={colors.textMuted}
+                />
               </CategoryHeading>
-              <ProgressBar value={percentage} color={category.color} height={6} />
+              <ProgressBar
+                value={percentage}
+                color={category.color}
+                height={6}
+              />
               <Percentage>{Math.round(percentage * 100)}% tổng chi</Percentage>
             </CategoryButton>
           );
@@ -84,7 +99,7 @@ const EmptyText = styled.Text`
 
 const CategoryButton = styled.TouchableOpacity<{ $hasDivider: boolean }>`
   padding: ${spacing.md}px 0;
-  border-bottom-width: ${({ $hasDivider }) => $hasDivider ? 1 : 0}px;
+  border-bottom-width: ${({ $hasDivider }) => ($hasDivider ? 1 : 0)}px;
   border-bottom-color: ${colors.border};
 `;
 

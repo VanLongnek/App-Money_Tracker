@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import styled from "styled-components/native";
 
 import { colors, radius, spacing } from "../theme/tokens";

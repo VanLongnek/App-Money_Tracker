@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { Link, useRouter } from "expo-router";
 import type { ComponentProps } from "react";
 import { useState } from "react";
@@ -103,7 +103,8 @@ export default function SignUpScreen() {
           </CreateButton>
 
           <FooterText>
-            Đã có tài khoản? <SignInLink href="/auth/sign-in">Đăng nhập</SignInLink>
+            Đã có tài khoản?{" "}
+            <SignInLink href="/auth/sign-in">Đăng nhập</SignInLink>
           </FooterText>
         </Content>
       </ScrollArea>

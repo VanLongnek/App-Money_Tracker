@@ -1,4 +1,4 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { useState } from "react";
 import { Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -39,7 +39,10 @@ export default function VerifyEmailScreen() {
     try {
       setIsSending(true);
       await resendVerificationEmail();
-      Alert.alert("Đã gửi lại email", "Hãy kiểm tra cả hộp thư đến và thư rác.");
+      Alert.alert(
+        "Đã gửi lại email",
+        "Hãy kiểm tra cả hộp thư đến và thư rác.",
+      );
     } catch (error) {
       Alert.alert("Không thể gửi email", getAuthErrorMessage(error));
     } finally {
@@ -51,14 +54,18 @@ export default function VerifyEmailScreen() {
     <Screen>
       <Content>
         <IconCircle>
-          <Ionicons name="mail-unread-outline" size={34} color={colors.primary} />
+          <Ionicons
+            name="mail-unread-outline"
+            size={34}
+            color={colors.primary}
+          />
         </IconCircle>
 
         <StepText>BƯỚC 2/3</StepText>
         <Title>Xác minh email</Title>
         <Description>
-          Chúng tôi đã gửi liên kết xác minh đến email bên dưới. Firebase yêu cầu
-          email được xác minh trước khi bật OTP điện thoại.
+          Chúng tôi đã gửi liên kết xác minh đến email bên dưới. Firebase yêu
+          cầu email được xác minh trước khi bật OTP điện thoại.
         </Description>
         <Email>{user?.email}</Email>
 

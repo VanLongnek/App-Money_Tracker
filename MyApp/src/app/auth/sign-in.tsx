@@ -1,11 +1,15 @@
-import { Ionicons } from "@expo/vector-icons";
+import Ionicons from "@react-native-vector-icons/ionicons";
 import { Link, useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, KeyboardAvoidingView, Platform } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
 
-import { getAuthErrorMessage, resetPassword, signIn } from "../../services/authService";
+import {
+  getAuthErrorMessage,
+  resetPassword,
+  signIn,
+} from "../../services/authService";
 import { colors, radius, spacing } from "../../theme/tokens";
 
 export default function SignInScreen() {
@@ -80,7 +84,11 @@ export default function SignInScreen() {
 
         <Label>Mật khẩu</Label>
         <InputBox>
-          <Ionicons name="lock-closed-outline" size={20} color={colors.textMuted} />
+          <Ionicons
+            name="lock-closed-outline"
+            size={20}
+            color={colors.textMuted}
+          />
           <Input
             value={password}
             onChangeText={setPassword}
@@ -121,14 +129,17 @@ export default function SignInScreen() {
 
         <GoogleButton
           activeOpacity={0.75}
-          onPress={() => Alert.alert("Thông báo", "Đăng nhập Google sẽ được thêm sau.")}
+          onPress={() =>
+            Alert.alert("Thông báo", "Đăng nhập Google sẽ được thêm sau.")
+          }
         >
           <Ionicons name="logo-google" size={19} color={colors.text} />
           <GoogleButtonText>Tiếp tục với Google</GoogleButtonText>
         </GoogleButton>
 
         <FooterText>
-          Chưa có tài khoản? <SignUpLink href="/auth/sign-up">Đăng ký ngay</SignUpLink>
+          Chưa có tài khoản?{" "}
+          <SignUpLink href="/auth/sign-up">Đăng ký ngay</SignUpLink>
         </FooterText>
       </Container>
     </Screen>
