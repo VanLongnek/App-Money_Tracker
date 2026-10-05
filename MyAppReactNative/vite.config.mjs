@@ -10,18 +10,29 @@ const extensions = [
   '.json',
 ];
 
+const globalDefinitions = {
+  global: 'globalThis',
+};
+
 export default defineConfig({
   plugins: [react()],
+
+  define: globalDefinitions,
+
   resolve: {
     alias: [
       {find: /^react-native$/, replacement: 'react-native-web'},
     ],
     extensions,
   },
+
   optimizeDeps: {
     rolldownOptions: {
       resolve: {
         extensions,
+      },
+      transform: {
+        define: globalDefinitions,
       },
     },
   },

@@ -1,40 +1,22 @@
-import {StatusBar, StyleSheet, Text, View} from 'react-native';
-import {colors} from './src/theme/color.jsx';
-import {createStaticNavigation} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import DashboardScreen from './src/screens/DashboardScreen.jsx';
-import SettingsScreen from './src/screens/SettingsScreen.jsx';
-
-
-// Khai báo các màn hình và cách hiển thị chúng.
-const RootStack = createNativeStackNavigator({
-  initialRouteName: 'Dashboard',
-
-  screenOptions: {
-    contentStyle: {
-      backgroundColor: colors.background,
-    },
-    headerStyle: {
-      backgroundColor: colors.surface,
-    },
-    headerTintColor: colors.text,
-  },
-
-  screens: {
-    Dashboard: {
-      screen: DashboardScreen,
-      options: {title: 'Tổng quan'},
-    },
-    Settings: {
-      screen: SettingsScreen,
-      options: {title: 'Cài đặt'},
-    },
-  },
-});
-
-// Tạo component điều hướng từ cấu hình trên.
-const Navigation = createStaticNavigation(RootStack);
+import { StatusBar, StyleSheet, View } from 'react-native';
+import Footer from './src/components/Footer.jsx';
+import { colors } from './src/theme/color.jsx';
 
 export default function App() {
-  return <Navigation />;
+  return (
+    <View style={styles.container}>
+      {/* Cấu hình thanh trạng thái pin, sóng (màu đen tối) */}
+      <StatusBar barStyle="light-content" backgroundColor={colors.background} />
+
+      {/* Gọi component Footer (đã chứa toàn bộ logic chuyển tab và hiển thị màn hình) */}
+      <Footer />
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.background,
+  },
+});
