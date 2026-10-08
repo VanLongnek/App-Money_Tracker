@@ -1,32 +1,22 @@
-import {Button , Text, View} from 'react-native';
-import {colors} from '../theme/color.jsx';
-import {useNavigation} from '@react-navigation/native';
-
-
-
-
+import { StyleSheet, Text, View } from 'react-native';
+import { colors } from '../theme/color.jsx';
 
 export default function DashboardScreen() {
-    const navigation = useNavigation();
-
-    return (
-        <View style={{flex:1}}>
-            <Text style={{color: colors.text}}>
-                Màn hình Tổng quan
-            </Text>
-
-            <Button
-                title="Mở cài đặt"
-                onPress={() => navigation.navigate('Settings')}
-            >
-
-            </Button>
-
-            <Button
-                title="Xem giao dịch"
-                onPress={() => navigation.navigate('Transactions')}
-            />
-
-        </View>
-    )
+  return (
+    <View style={styles.container}>
+      <Text style={styles.text}>Màn hình Tổng quan</Text>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 16,
+    backgroundColor: colors.background,
+  },
+  text: {
+    color: colors.text,
+    fontSize: 16,
+  },
+});
