@@ -3,7 +3,7 @@ import { createStaticNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { LayoutDashboard, ReceiptText, PieChart, Settings } from 'lucide-react-native';
 import { colors } from '../theme/color.jsx';
-
+import Add from './Add.jsx';
 // Import các màn hình
 import DashboardScreen from '../screens/DashboardScreen.jsx';
 import TransactionsScreen from '../screens/TransactionsScreen.jsx';
@@ -52,6 +52,16 @@ const RootTabs = createBottomTabNavigator({
         title: 'Tổng quan',   // Tiêu đề hiển thị trên Header và nhãn dưới tab bar
         // Hàm render Icon cho tab: nhận vào `color` (màu active/inactive) và `size` chuẩn từ thư viện
         tabBarIcon: ({ color, size }) => <LayoutDashboard size={size} color={color} />,
+      },
+    },
+
+     // --- TAB 3: THÊM ---
+    Add: {
+      screen: Add, // Component màn hình sẽ render khi vào tab này
+      options: {
+        title: 'Thêm',   // Tiêu đề hiển thị trên Header và nhãn dưới tab bar
+        // Hàm render Icon cho tab: nhận vào `color` (màu active/inactive) và `size` chuẩn từ thư viện
+        tabBarIcon: ({ color, size }) => <Add size={size} color={color} />,
       },
     },
     // --- TAB 2: GIAO DỊCH ---

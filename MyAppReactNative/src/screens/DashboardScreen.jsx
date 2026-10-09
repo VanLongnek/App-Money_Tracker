@@ -4,7 +4,7 @@ import { colors } from '../theme/color.jsx';
 export default function DashboardScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>Màn hình Tổng quan</Text>
+      
     </View>
   );
 }
