@@ -34,11 +34,35 @@ const RootTabs = createBottomTabNavigator({
 
     // Tùy biến kiểu dáng cho thanh Bottom Tab Bar dưới đáy
     tabBarStyle: {
-      backgroundColor: '#1E1E1E', // Màu nền của thanh tab bar (xám đen đậm)
-      borderTopColor: '#333333',   // Màu đường viền mảnh ngăn cách phía trên tab bar
-      height: 60,                  // Chiều cao cố định của thanh tab bar (60 pixel)
-      paddingBottom: 4,            // Khoảng đệm bên dưới tab bar (để chữ không chạm mép dưới)
-      paddingTop: 4,               // Khoảng đệm bên trên tab bar (tạo khoảng cách với icon)
+      // backgroundColor: '#1E1E1E', // Màu nền của thanh tab bar (xám đen đậm)
+      // borderTopColor: '#333333',   // Màu đường viền mảnh ngăn cách phía trên tab bar
+      // height: 60,                  // Chiều cao cố định của thanh tab bar (60 pixel)
+      // paddingBottom: 4,            // Khoảng đệm bên dưới tab bar (để chữ không chạm mép dưới)
+      // paddingTop: 4,               // Khoảng đệm bên trên tab bar (tạo khoảng cách với icon)
+
+
+      position :'absolute',           // 1 . Giúp thanh tab tách khỏi mép đáy để nổi lên 
+      bottom: 20,                     // 2 . Cách đáy màm hình đúng 20px 
+      left : 16, 
+      right : 16, 
+      borderRadius : 24, 
+      height:64 , 
+      backgroundColor: '1E1E1E',
+      borderTopWidth:0 , 
+      
+      
+      // Hiệu ứng bóng đổ giúp thanh tab nổi khối trên màn hình 
+      elevation: 8 , 
+      shadowColor : '#000000',
+      shadowOffset: {width: 0 , height:4},
+      shadowOpacity : 0.35 , 
+      shadowRadius: 8 , 
+
+      paddingBottom: 6, 
+      paddingTop:6,
+
+
+
     },
 
 

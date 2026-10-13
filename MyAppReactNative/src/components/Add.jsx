@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState,useRef } from 'react';
 import { Plus, X, ArrowDownLeft, ArrowLeftRight, ArrowUpRight } from 'lucide-react-native';
 import { colors } from '../theme/color.jsx';
 
-import { StyleSheet, View, TouchableOpacity, Text } from 'react-native'
+import { StyleSheet, View, TouchableOpacity, Text,  PanResponder } from 'react-native'
 
 
 
@@ -19,6 +19,17 @@ export default function Add() {
     // 3. Hàm dóng menu khi bấm nút hoạc chạm ra ngoài 
     const handleClose = () => {
         setIsopen(false);
+    }
+
+    //4. Khởi tạo sate activeOption để lưu lựa chọn hiện tại
+    // và hàm setActiveOption để cập nhật lựa chọn  
+
+    const [ activeOption , setActiveOption] = useState(null);
+
+
+    // 5. Khởi tạo hàm để biết ngón tay đang kéo về hướng nào
+    const getSelectedOption = (dx , dy) => {
+        if (dy >= -20 ) return 
     }
 
 
@@ -95,7 +106,7 @@ export default function Add() {
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 38,
         alignSelf: 'center',
         alignItems: 'center',
         justifyContent: 'center',
