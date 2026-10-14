@@ -47,7 +47,7 @@ const RootTabs = createBottomTabNavigator({
       right : 16, 
       borderRadius : 24, 
       height:64 , 
-      backgroundColor: '1E1E1E',
+      backgroundColor: '#1E1E1E',
       borderTopWidth:0 , 
       
       
