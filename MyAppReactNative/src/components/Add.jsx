@@ -28,46 +28,77 @@ export default function Add() {
 
     };
 
+    // KHỏi tạo biến lưu bộ đếm thời gian và cờ đánh dấu đã nhấn giữ lâu chưa 
+    const timerRef = useRef(null);
+    const isLongPressRef = useRef(false);
+
     // Khởi tạo đối tượng bộ bắt cử chỉ 
 
     const panResponder = useRef(
         PanResponder.create({
             onStartShouldSetPanResponder: () => true,
-
-
-
-            // Hàm xử lý logic khi chạm ngón tay xuống --> Mở Menu 
-            onPanResponderGrant: () => {
-                setIsopen(true);
-            },
             onMoveShouldSetPanResponder: () => true, // 👈 THÊM DÒNG NÀY: Xin quyền theo dõi khi di chuyển ngón tay
+            
+            // Hàm xử lý logic khi chạm ngón tay xuống , chưa mở ngay mà hẹn giờ 250ms 
+            onPanResponderGrant: () => {
+                isLongPressRef.current = false;
 
-            // Khi rê ngón tay đi -> cập nhật nút đang sáng
-            onPanResponderMove: (_, { dx, dy }) => {
-                setActiveOption(getSelectedOption(dx, dy));
+                //Bắt đầu đếm giờ : Nếu giữ đúng 250ms thì mới tính là NHẤN GIỮ và mở menu 
+                timerRef.current = setTimeout(() => {
+                    isLongPressRef.current = true;
+                    setIsopen(true);
+                },250) ; // 250 mili-giây 
             },
 
 
-            // Hàm xử lý khi rê ngón tay đi --> cập nhật nút đang sáng 
+
+            // KHI RÊ TAY: Chỉ bắt cử chỉ khi ĐÃ NHẤN GIỮ ĐỦ LÂU
+            onPanResponderMove: (_, { dx, dy }) => {
+                if (isLongPressRef.current) { 
+                    setActiveOption(getSelectedOption(dx, dy));
+                }
+            },
+
+
+
+            // Khi thả tay ra 
             onPanResponderRelease: (_, { dx, dy }) => {
-                const selected = getSelectedOption(dx, dy);
+                // Hủy bộ đếm giờ nếu người dùng nhấc tay quá sớm 
 
-                if (selected === 'income') {
-                    console.log('Đã chọn : Thu nhập')
+                if(timerRef.current) {
+                    clearTimeout(timerRef.current);
                 }
 
-                if (selected === 'expense') {
-                    console.log('Đã chọn : Chi tiêu')
+                //Nếu là NHẤN GIỮ và KÉO
+
+                if(isLongPressRef.current) {
+                    const selected = getSelectedOption(dx,dy);
+
+
+                    if(selected === 'income') {
+                        console.log('Đã chọn : Thu Nhập')
+                    }
+
+                    if(selected === 'expense') {
+                        console.log('Đã chọn : Chi Tiêu')
+                    }
+
+                    if(selected === 'transaction') {
+                        console.log('Đã chọn : Giao Dịch')
+                    }
+                
+                    //Đóng menu lại sau khi thả tay 
+    
+                    setIsopen(false);
+                    setActiveOption(null);
+                } else {
+                    // Nếu chỉ là bấm chạm nhanh (Click bình thường)
+                    if(isOpen) {
+                        setIsopen(false);
+                        setActiveOption(null);
+                    }
                 }
 
-                if (selected === 'transaction') {
-                    console.log('Đã chọn : Giao Dịch');
-                }
-
-
-                // 5.Reset lại trạng thái sau khi xử lý xong
-                setIsopen(false);
-                setActiveOption(null);
 
             },
 
