@@ -1,10 +1,10 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { colors } from '../theme/color.jsx';
+import { colors } from '../../theme/color.jsx';
 
-export default function DashboardScreen() {
+export default function Home() {
   return (
     <View style={styles.container}>
-      
+
     </View>
   );
 }

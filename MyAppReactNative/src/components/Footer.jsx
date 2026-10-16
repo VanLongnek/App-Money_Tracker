@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { createStaticNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { LayoutDashboard, ReceiptText, PieChart, Settings } from 'lucide-react-native';
+import { House, ReceiptText, PieChart, Settings } from 'lucide-react-native';
 import { colors } from '../theme/color.jsx';
 import Add from './Add.jsx';
 // Import các màn hình
-import DashboardScreen from '../screens/DashboardScreen.jsx';
-import TransactionsScreen from '../screens/TransactionsScreen.jsx';
-import SettingsScreen from '../screens/SettingsScreen.jsx';
-import BudgetScreen from '../screens/BudgetScreen.jsx';
+import Home from '../screens/Home/Home.jsx';
+import TransactionsScreen from '../screens/Transaction/TransactionsScreen.jsx';
+import SettingsScreen from '../screens/Profile-Setting/SettingsScreen.jsx';
+import BudgetScreen from '../screens/Budget/BudgetScreen.jsx';
 
 
 
@@ -41,25 +41,25 @@ const RootTabs = createBottomTabNavigator({
       // paddingTop: 4,               // Khoảng đệm bên trên tab bar (tạo khoảng cách với icon)
 
 
-      position :'absolute',           // 1 . Giúp thanh tab tách khỏi mép đáy để nổi lên 
+      position: 'absolute',           // 1 . Giúp thanh tab tách khỏi mép đáy để nổi lên 
       bottom: 20,                     // 2 . Cách đáy màm hình đúng 20px 
-      left : 16, 
-      right : 16, 
-      borderRadius : 24, 
-      height:64 , 
+      left: 16,
+      right: 16,
+      borderRadius: 24,
+      height: 64,
       backgroundColor: '#1E1E1E',
-      borderTopWidth:0 , 
-      
-      
-      // Hiệu ứng bóng đổ giúp thanh tab nổi khối trên màn hình 
-      elevation: 8 , 
-      shadowColor : '#000000',
-      shadowOffset: {width: 0 , height:4},
-      shadowOpacity : 0.35 , 
-      shadowRadius: 8 , 
+      borderTopWidth: 0,
 
-      paddingBottom: 6, 
-      paddingTop:6,
+
+      // Hiệu ứng bóng đổ giúp thanh tab nổi khối trên màn hình 
+      elevation: 8,
+      shadowColor: '#000000',
+      shadowOffset: { width: 0, height: 4 },
+      shadowOpacity: 0.35,
+      shadowRadius: 8,
+
+      paddingBottom: 6,
+      paddingTop: 6,
 
 
 
@@ -89,11 +89,11 @@ const RootTabs = createBottomTabNavigator({
   screens: {
     // --- TAB 1: TỔNG QUAN ---
     Home: {
-      screen: DashboardScreen, // Component màn hình sẽ render khi vào tab này
+      screen: Home, // Component màn hình sẽ render khi vào tab này
       options: {
         title: 'Tổng quan',   // Tiêu đề hiển thị trên Header và nhãn dưới tab bar
         // Hàm render Icon cho tab: nhận vào `color` (màu active/inactive) và `size` chuẩn từ thư viện
-        tabBarIcon: ({ color, size }) => <LayoutDashboard size={size} color={color} />,
+        tabBarIcon: ({ color, size }) => <House size={size} color={color} />,
       },
     },
 

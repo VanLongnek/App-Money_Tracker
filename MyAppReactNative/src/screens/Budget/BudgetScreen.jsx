@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { colors } from '../theme/color.jsx';
-export default function BudgetScreen() {
+import { colors } from '../../theme/color.jsx';export default function BudgetScreen() {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Màn hình Ngân sách</Text>

@@ -1,8 +1,8 @@
-import {FlatList, StyleSheet, Text, View} from 'react-native';
-import {colors} from '../theme/color.jsx';
+import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { colors } from '../../theme/color.jsx';
 
 const transactions = [
-    {
+  {
     id: '1',
     title: 'Ăn sáng',
     category: 'Ăn uống',
@@ -27,7 +27,7 @@ const transactions = [
 
 
 
-function TransactionItem({transaction}) {
+function TransactionItem({ transaction }) {
   const amountColor =
     transaction.type === 'income' ? colors.primary : colors.textMuted;
 
@@ -43,7 +43,7 @@ function TransactionItem({transaction}) {
         </Text>
       </View>
 
-      <Text style={[styles.transactionAmount, {color: amountColor}]}>
+      <Text style={[styles.transactionAmount, { color: amountColor }]}>
         {transaction.amount}
       </Text>
     </View>
@@ -58,7 +58,7 @@ export default function TransactionsScreen() {
       <FlatList
         data={transactions}
         keyExtractor={transaction => transaction.id}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <TransactionItem transaction={item} />
         )}
         contentContainerStyle={styles.transactionList}
