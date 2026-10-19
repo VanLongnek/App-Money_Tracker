@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors } from '../../theme/color.jsx';
+import HeaderBalance from './components/HeaderBalance.jsx';
 
 export default function Home() {
   return (
     <View style={styles.container}>
+      <HeaderBalance />
 
     </View>
   );

@@ -3,7 +3,7 @@ import { createStaticNavigation } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { House, ReceiptText, PieChart, Settings } from 'lucide-react-native';
 import { colors } from '../theme/color.jsx';
-import Add from './Add.jsx';
+import Add from '../components/Add.jsx';
 // Import các màn hình
 import Home from '../screens/Home/Home.jsx';
 import TransactionsScreen from '../screens/Transaction/TransactionsScreen.jsx';
@@ -24,6 +24,7 @@ const RootTabs = createBottomTabNavigator({
 
   // 2. CẤU HÌNH GIAO DIỆN CHUNG (Áp dụng cho TẤT CẢ các tab)
   screenOptions: {
+    headerShown: false, // 👈 Thêm dòng này vào đây để ẩn thanh Header trên cùng
 
 
     // Tùy biến kiểu dáng cho toàn bộ phần thân màn hình
@@ -34,12 +35,7 @@ const RootTabs = createBottomTabNavigator({
 
     // Tùy biến kiểu dáng cho thanh Bottom Tab Bar dưới đáy
     tabBarStyle: {
-      // backgroundColor: '#1E1E1E', // Màu nền của thanh tab bar (xám đen đậm)
-      // borderTopColor: '#333333',   // Màu đường viền mảnh ngăn cách phía trên tab bar
-      // height: 60,                  // Chiều cao cố định của thanh tab bar (60 pixel)
-      // paddingBottom: 4,            // Khoảng đệm bên dưới tab bar (để chữ không chạm mép dưới)
-      // paddingTop: 4,               // Khoảng đệm bên trên tab bar (tạo khoảng cách với icon)
-
+     
 
       position: 'absolute',           // 1 . Giúp thanh tab tách khỏi mép đáy để nổi lên 
       bottom: 20,                     // 2 . Cách đáy màm hình đúng 20px 
@@ -87,11 +83,12 @@ const RootTabs = createBottomTabNavigator({
 
   // 3. DANH SÁCH CÁC MÀN HÌNH TAB CỤ THỂ
   screens: {
+    
     // --- TAB 1: TỔNG QUAN ---
     Home: {
       screen: Home, // Component màn hình sẽ render khi vào tab này
       options: {
-        title: 'Tổng quan',   // Tiêu đề hiển thị trên Header và nhãn dưới tab bar
+        title: 'Tổng Quan',   // Tiêu đề hiển thị trên Header và nhãn dưới tab bar
         // Hàm render Icon cho tab: nhận vào `color` (màu active/inactive) và `size` chuẩn từ thư viện
         tabBarIcon: ({ color, size }) => <House size={size} color={color} />,
       },
