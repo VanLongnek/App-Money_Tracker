@@ -102,8 +102,10 @@ export default function HeaderBalance() {
 
 const styles = StyleSheet.create({
     container: {
-        backgroundColor: '#FFF6E5', // Màu nền kem sáng bo cong mềm mại như trong ảnh
+        backgroundColor: '#1E1E22', // Màu nền kem sáng bo cong mềm mại như trong ảnh
         borderRadius: 32, // Tự động bo tròn đều cả 4 góc
+        borderWidth: 1,
+        borderColor: 'rgba(255, 255, 255, 0.08)', // Viền trắng mờ 8%
 
         paddingHorizontal: 20,
         paddingTop: 16,
@@ -130,8 +132,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 6,
         borderWidth: 1,
-        borderColor: '#F1F1FA',
-        backgroundColor: '#FFFFFF',
+        borderColor: 'rgba(255, 255, 255, 0.1)', // Viền mờ
+        backgroundColor: '#2A2A30',               // Nền tối đồng bộ
         paddingHorizontal: 14,
         paddingVertical: 8,
         borderRadius: 20,
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
     monthText: {
         fontSize: 14,
         fontWeight: '600',
-        color: '#212325',
+        color: '#FFFFFF',
     },
     bellButton: {
         padding: 6,
@@ -155,14 +157,14 @@ const styles = StyleSheet.create({
 
     balanceLabel: {
         fontSize: 14,
-        color: '#91919F',
+        color: '#A0A0A0',
         marginBottom: 6,
     },
 
     balanceAmount: {
         fontSize: 36,
         fontWeight: '700',
-        color: '#161719',
+        color: '#FFFFFF',
     },
 
 

@@ -6,13 +6,13 @@ import { colors } from '../../../theme/color.jsx';
 export default function SpendFrequency() {
   // 1. Quản lý tab đang chọn (Mặc định chọn 'Today')
   const [activeTab, setActiveTab] = useState('Today');
-  
+
   // 4 mốc thời gian theo đúng ảnh thiết kế
   const tabs = ['Today', 'Week', 'Month', 'Year'];
 
   return (
     <View style={styles.container}>
-      
+
       {/* 2. THANH TIÊU ĐỀ */}
       <Text style={styles.title}>Spend Frequency</Text>
 
@@ -70,8 +70,10 @@ export default function SpendFrequency() {
 // 5. BỘ STYLESHEET CHUẨN GIAO DIỆN SÁNG
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#FFFFFF', // Nền màu trắng như ảnh thiết kế
-    borderRadius: 24,           // Bo tròn 4 góc Container-2
+    backgroundColor: '#1E1E22',                 // 👈 Đổi sang #1E1E22
+    borderRadius: 24,
+    borderWidth: 1,                             // 👈 Thêm viền
+    borderColor: 'rgba(255, 255, 255, 0.08)',   // 👈 Viền mờ đồng bộ
     paddingTop: 16,
     paddingBottom: 16,
     paddingHorizontal: 16,
@@ -80,7 +82,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#0D0E0F',
+    color: '#FFFFFF',
     marginBottom: 8,
   },
   chartContainer: {

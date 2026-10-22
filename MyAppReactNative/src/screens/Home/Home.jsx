@@ -1,15 +1,22 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, ScrollView } from 'react-native'; // 👈 Thêm ScrollView vào đây
 import { colors } from '../../theme/color.jsx';
 import HeaderBalance from './components/HeaderBalance.jsx';
 import SpendFrequency from './components/SpendFrequency.jsx';
+import RecentTransactions from './components/RecentTransactions.jsx';
+
+
 
 export default function Home() {
   return (
-    <View style={styles.container}>
+    <ScrollView
+      style={styles.container}
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: 100 }} // Đệm đáy 100px để không bị thanh Footer che
+    >
       <HeaderBalance />
       <SpendFrequency />
-
-    </View>
+      <RecentTransactions />
+    </ScrollView>
   );
 }
 
