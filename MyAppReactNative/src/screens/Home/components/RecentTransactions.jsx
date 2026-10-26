@@ -57,7 +57,7 @@ export default function RecentTransactions() {
 
 
             {/*Danh sách các thẻ giao dịch */}
-            <View>
+            <View style={styles.list}>
 
                 {/* Biểu thức này dùng map lặp các phần tử trong mảng transaction */}
                 {transaction.map((item) => {

@@ -3,7 +3,7 @@ import { Plus, X, ArrowDownLeft, ArrowLeftRight, ArrowUpRight } from 'lucide-rea
 import { colors } from '../theme/color.jsx';
 
 import { StyleSheet, View, TouchableOpacity, Text, PanResponder } from 'react-native'
-
+import { navigationRef } from '../navigation/BottomTabNavigator.jsx';
 
 
 
@@ -79,9 +79,12 @@ export default function Add() {
                         console.log('Đã chọn : Thu Nhập')
                     }
 
-                    if(selected === 'expense') {
-                        console.log('Đã chọn : Chi Tiêu')
+                    if (selected === 'expense') {
+                        if (navigationRef.isReady()) {
+                            navigationRef.navigate('Expense'); // 👈 Mở ngay màn hình Expense!
+                        }
                     }
+
 
                     if(selected === 'transaction') {
                         console.log('Đã chọn : Giao Dịch')

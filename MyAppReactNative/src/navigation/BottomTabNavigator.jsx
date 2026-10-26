@@ -1,169 +1,129 @@
-import { StyleSheet, Text, View } from 'react-native';
-import { createStaticNavigation } from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { createStaticNavigation, createNavigationContainerRef } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { House, ReceiptText, PieChart, Settings } from 'lucide-react-native';
 import { colors } from '../theme/color.jsx';
 import Add from '../components/Add.jsx';
-// Import các màn hình
+
+// 1. IMPORT CÁC MÀN HÌNH
 import Home from '../screens/Home/Home.jsx';
+import BudgetScreen from '../screens/Budget/BudgetScreen.jsx';
 import TransactionsScreen from '../screens/Transaction/TransactionsScreen.jsx';
 import SettingsScreen from '../screens/Profile-Setting/SettingsScreen.jsx';
-import BudgetScreen from '../screens/Budget/BudgetScreen.jsx';
+import ExpenseScreen from '../screens/Transaction/ExpenseScreen.jsx';
 
-
-
-// Khởi tạo bộ điều hướng thanh tab dưới đáy (Bottom Tab Navigator) bằng cấu hình tĩnh (Static API)
+// ========================================================
+// 2. CẤU HÌNH BỘ ĐIỀU HƯỚNG TĨNH (ROOT TABS)
+// ========================================================
 const RootTabs = createBottomTabNavigator({
+  initialRouteName: 'Home',
+  backBehavior: 'history',
 
-
-  // 1. CẤU HÌNH ĐIỀU HƯỚNG CHUNG
-  initialRouteName: 'Home', // Màn hình mặc định hiển thị đầu tiên khi mở app (ở đây là tab 'Home')
-  backBehavior: 'history',  // Hành vi khi bấm nút Back (quay lại màn hình tab đã mở trước đó theo lịch sử)
-
-
-
-  // 2. CẤU HÌNH GIAO DIỆN CHUNG (Áp dụng cho TẤT CẢ các tab)
+  // Cấu hình giao diện chung cho tất cả các tab
   screenOptions: {
-    headerShown: false, // 👈 Thêm dòng này vào đây để ẩn thanh Header trên cùng
-
-
-    // Tùy biến kiểu dáng cho toàn bộ phần thân màn hình
+    headerShown: false, // Ẩn header mặc định
     sceneStyle: {
-      backgroundColor: colors.background, // Màu nền nội dung của màn hình (màu đen '#000000')
+      backgroundColor: colors.background, // Nền đen #000000
     },
-
-
-    // Tùy biến kiểu dáng cho thanh Bottom Tab Bar dưới đáy
     tabBarStyle: {
-     
-
-      position: 'absolute',           // 1 . Giúp thanh tab tách khỏi mép đáy để nổi lên 
-      bottom: 20,                     // 2 . Cách đáy màm hình đúng 20px 
+      position: 'absolute',
+      bottom: 20,
       left: 16,
       right: 16,
       borderRadius: 24,
       height: 64,
       backgroundColor: '#1E1E1E',
       borderTopWidth: 0,
-
-
-      // Hiệu ứng bóng đổ giúp thanh tab nổi khối trên màn hình 
       elevation: 8,
       shadowColor: '#000000',
       shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.35,
       shadowRadius: 8,
-
       paddingBottom: 6,
       paddingTop: 6,
-
-
-
     },
-
-
-    // Kiểu dáng cho chữ nhãn (Label) bên dưới icon
     tabBarLabelStyle: {
-      fontSize: 11, // Cỡ chữ của tên tab (11 pixel)
+      fontSize: 11,
     },
-
-
-    // Màu sắc trạng thái của các Tab
-    tabBarActiveTintColor: colors.textMuted, // Màu của icon và chữ khi ĐANG ĐƯỢC CHỌN (màu cam '#FFA500')
-    tabBarInactiveTintColor: '#888888',     // Màu của icon và chữ khi KHÔNG ĐƯỢC CHỌN (màu xám nhạt)
-    // Tùy biến thanh Header (tiêu đề trên cùng của màn hình)
-    headerStyle: {
-      backgroundColor: '#1E1E1E', // Màu nền của thanh Header trên cùng
-    },
-    headerTintColor: colors.text, // Màu của chữ tiêu đề và nút back trên Header (màu trắng)
+    tabBarActiveTintColor: colors.textMuted, // Màu cam khi chọn
+    tabBarInactiveTintColor: '#888888',     // Màu xám khi không chọn
   },
 
-
-
-
-  // 3. DANH SÁCH CÁC MÀN HÌNH TAB CỤ THỂ
   screens: {
-    
-    // --- TAB 1: TỔNG QUAN ---
+    // ----------------------------------------------------
+    // NHÓM 1: 4 TAB CHÍNH HIỂN THỊ DƯỚI THANH ĐÁY (TAB BAR)
+    // ----------------------------------------------------
     Home: {
-      screen: Home, // Component màn hình sẽ render khi vào tab này
+      screen: Home,
       options: {
-        title: 'Tổng Quan',   // Tiêu đề hiển thị trên Header và nhãn dưới tab bar
-        // Hàm render Icon cho tab: nhận vào `color` (màu active/inactive) và `size` chuẩn từ thư viện
+        title: 'Tổng Quan',
         tabBarIcon: ({ color, size }) => <House size={size} color={color} />,
       },
     },
 
-
-
-    // TAB 2: Ngân sách (Nằm bên phải Tổng Quan )
     Budget: {
       screen: BudgetScreen,
       options: {
         title: 'Ngân Sách',
-        tabBarIcon: ({ color, size }) => (
-          <PieChart size={size} color={color} />
-        ),
-
-        // 👉 Đẩy tab Ngân sách dạt sang trái 25px
-        tabBarItemStyle: {
-          marginRight: 35,
-        },
+        tabBarIcon: ({ color, size }) => <PieChart size={size} color={color} />,
+        tabBarItemStyle: { marginRight: 35 }, // Dạt sang trái để nhường chỗ nút Add
       },
     },
 
-
-    // --- TAB 4: GIAO DỊCH ---
     Transactions: {
-      screen: TransactionsScreen, // Component màn hình danh sách giao dịch
+      screen: TransactionsScreen,
       options: {
-        title: 'Giao dịch',       // Tiêu đề hiển thị
+        title: 'Giao dịch',
         tabBarIcon: ({ color, size }) => <ReceiptText size={size} color={color} />,
-        // 👉 Đẩy tab Giao dịch dạt sang phải 25px
-        tabBarItemStyle: {
-          marginLeft: 35,
-        },
+        tabBarItemStyle: { marginLeft: 35 }, // Dạt sang phải để nhường chỗ nút Add
       },
     },
-    // --- TAB 5: CÀI ĐẶT ---
+
     Settings: {
-      screen: SettingsScreen,     // Component màn hình cài đặt
+      screen: SettingsScreen,
       options: {
-        title: 'Cài đặt',         // Tiêu đề hiển thị
+        title: 'Cài đặt',
         tabBarIcon: ({ color, size }) => <Settings size={size} color={color} />,
+      },
+    },
+
+    // ----------------------------------------------------
+    // NHÓM 2: CÁC MÀN HÌNH TẠO MỚI (Mở khi ấn nút Add, ẩn khỏi Tab Bar)
+    // ----------------------------------------------------
+    Expense: {
+      screen: ExpenseScreen,
+      options: {
+        tabBarItemStyle: { display: 'none' }, // Ẩn nút tab
+        tabBarStyle: { display: 'none' },     // Ẩn thanh tab bar khi mở màn hình này
       },
     },
   },
 });
 
-
-// Tạo đối tượng Navigation từ cấu hình RootTabs
+// ========================================================
+// 3. KHỞI TẠO NAVIGATION & ĐIỀU KHIỂN CHUYỂN TRANG
+// ========================================================
 const Navigation = createStaticNavigation(RootTabs);
 
-// Xuất ra component Footer (hoặc FooterNavigation)
-export default function Footer() {
+// Biến điều khiển chuyển trang (Remote) xuất ra cho Add.jsx sử dụng
+export const navigationRef = createNavigationContainerRef();
+
+export default function BottomTabNavigator() {
   return (
     <View style={styles.container}>
-      <Navigation />
-      {/* Đặt Add ở đây để nó nổi lên chính giữa thanh tab bar */}
+      <Navigation ref={navigationRef} />
+      {/* Nút Add nổi ở giữa thanh Tab Bar */}
       <Add />
     </View>
-  )
+  );
 }
 
+// ========================================================
+// 4. STYLESHEET (Đã dọn sạch code thừa)
+// ========================================================
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     position: 'relative',
-  },
-  reportsScreen: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: colors.background,
-  },
-  reportsTitle: {
-    color: colors.text,
-    fontSize: 20,
   },
 });
