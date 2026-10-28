@@ -117,7 +117,16 @@ export default function TransactionForm({
                     <View>
                         <Text></Text>
                         {/* Điểm thay đổi 5 : Reder các prop trong categories */}
-                        {/* Cú pháp map để render các property trong thành phan */}
+                        {/* Cú pháp map để duyệt mảng categories truyền từ prop */}
+                        {categories.map((cat) => (
+                            <TouchableOpacity>
+                                <Text></Text>
+                                {/* Biểu thức đang dc chọn thì hiện dấu tích mày themecolor */}
+
+                            </TouchableOpacity>
+                        ))}
+
+
                     </View>
                 </View>
             </Modal>
@@ -172,3 +181,7 @@ export default function TransactionForm({
     )
 
 }
+
+const styles = StyleSheet.create({
+    
+});
