@@ -1,6 +1,5 @@
 /// <reference types="vitest/config" />
 import { defineConfig } from 'vite';
-import react from '@vitejs/plugin-react';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { storybookTest } from '@storybook/addon-vitest/vitest-plugin';
@@ -13,7 +12,6 @@ const globalDefinitions = {
   global: 'globalThis'
 };
 export default defineConfig({
-  plugins: [react()],
   define: globalDefinitions,
   resolve: {
     alias: [{

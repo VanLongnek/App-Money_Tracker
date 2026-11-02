@@ -11,7 +11,7 @@ export default function Home() {
     <ScrollView
       style={styles.container}
       showsVerticalScrollIndicator={false}
-      contentContainerStyle={{ paddingBottom: 100 }} // Đệm đáy 100px để không bị thanh Footer che
+      contentContainerStyle={styles.content} // Đệm đáy 100px để không bị thanh Footer che
     >
       <HeaderBalance />
       <SpendFrequency />
@@ -23,11 +23,14 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
     backgroundColor: colors.background,
+
+    // Chừa vùng riêng phía dưới cho thanh Bottom.
+    marginBottom: 100,
   },
-  text: {
-    color: colors.text,
-    fontSize: 16,
+
+  content: {
+    // Khoảng cách giữa nội dung và mép vùng cuộn.
+    padding: 16,
   },
 });

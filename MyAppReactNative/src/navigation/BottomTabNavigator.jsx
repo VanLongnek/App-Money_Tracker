@@ -11,6 +11,8 @@ import BudgetScreen from '../screens/Budget/BudgetScreen.jsx';
 import TransactionsScreen from '../screens/Transaction/TransactionsScreen.jsx';
 import SettingsScreen from '../screens/Profile-Setting/SettingsScreen.jsx';
 import ExpenseScreen from '../screens/Transaction/ExpenseScreen.jsx';
+import IncomeScreen from '../screens/Transaction/IncomeScreen.jsx';
+import TransferScreen from '../screens/Transaction/TransferScreen.jsx';
 
 // ========================================================
 // 2. CẤU HÌNH BỘ ĐIỀU HƯỚNG TĨNH (ROOT TABS)
@@ -97,6 +99,22 @@ const RootTabs = createBottomTabNavigator({
         tabBarStyle: { display: 'none' },     // Ẩn thanh tab bar khi mở màn hình này
       },
     },
+    Income: {
+      screen: IncomeScreen,
+      options: {
+        tabBarItemStyle: { display: 'none' },
+        tabBarStyle: { display: 'none' },
+      },
+    },
+
+    Transfer: {
+      screen: TransferScreen,
+      options: {
+        tabBarItemStyle: { display: 'none' },
+        tabBarStyle: { display: 'none' },
+      },
+    },
+    
   },
 });
 

@@ -75,19 +75,18 @@ export default function Add() {
                     const selected = getSelectedOption(dx,dy);
 
 
-                    if(selected === 'income') {
-                        console.log('Đã chọn : Thu Nhập')
-                    }
-
-                    if (selected === 'expense') {
+                    if (selected === 'income') {
+                        if (navigationRef.isReady()) {
+                            navigationRef.navigate('Income');
+                        }
+                    } else if (selected === 'expense') {
                         if (navigationRef.isReady()) {
                             navigationRef.navigate('Expense'); // 👈 Mở ngay màn hình Expense!
                         }
-                    }
-
-
-                    if(selected === 'transaction') {
-                        console.log('Đã chọn : Giao Dịch')
+                    } else if (selected === 'transaction') {
+                        if (navigationRef.isReady()) {
+                            navigationRef.navigate('Transfer');
+                        }
                     }
                 
                     //Đóng menu lại sau khi thả tay 
